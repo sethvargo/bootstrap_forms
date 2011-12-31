@@ -1,7 +1,7 @@
 class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
   delegate :content_tag, :hidden_field_tag, :check_box_tag, :radio_button_tag, :link_to, :to => :@template
   
-  %w(select check_box email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
+  %w(select collection_select check_box email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
     define_method(method_name) do |name, *args|
       @name = name
       @options = args.extract_options!
@@ -89,8 +89,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     @options[:class] = 'btn primary'
     
     content_tag(:div, :class => 'actions') do
-      super(name, *args << @options) +
-      link_to('Back', :back, :class => 'btn')
+      super(name, *args << @options) + ' ' + link_to('Cancel', :back, :class => 'btn')
     end
   end
   

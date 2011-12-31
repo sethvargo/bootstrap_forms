@@ -91,7 +91,7 @@ generates:
 
     <div class="actions">
       <input type="submit" value="..." class="btn primary" />
-      <a href="..." class="btn">Back</a>
+      <a href="..." class="btn">Cancel</a>
     </div>
 
 Pretty swell if you ask me.
