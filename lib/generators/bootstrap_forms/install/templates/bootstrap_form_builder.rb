@@ -1,6 +1,6 @@
 class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
   delegate :content_tag, :hidden_field_tag, :check_box_tag, :radio_button_tag, :link_to, :to => :@template
-  
+
   def error_messages
     if object.errors.full_messages.any?
       content_tag(:div, :class => 'alert-message block-message error') do
@@ -111,8 +111,9 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
   
   private
   def clearfix_div(&block)
+    @options[:error] = object.errors[@name].collect{|e| "#{@options[:label] || @name} #{e}".humanize}.join(', ') unless object.errors[@name].empty?
+    
     klasses = ['clearfix']
-    klasses << @options[:class] if @options[:class]
     klasses << 'error' if @options[:error]
     klasses << 'success' if @options[:success]
     klasses << 'warning' if @options[:warning]
