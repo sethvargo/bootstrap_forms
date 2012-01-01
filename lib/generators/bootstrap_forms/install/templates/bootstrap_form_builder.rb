@@ -1,7 +1,23 @@
 class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
   delegate :content_tag, :hidden_field_tag, :check_box_tag, :radio_button_tag, :link_to, :to => :@template
   
-  %w(select collection_select check_box email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
+  def error_messages
+    if object.errors.full_messages.any?
+      content_tag(:div, :class => 'alert-message block-message error') do
+        link_to('&times;'.html_safe, '#', :class => 'close') +
+        content_tag(:p, "<strong>Oh snap! You got an error!</strong> Fix the errors below and try again.".html_safe) +
+        content_tag(:ul) do
+          object.errors.full_messages.map do |message|
+            content_tag(:li, message)
+          end.join('').html_safe
+        end
+      end
+    else
+      '' # return empty string
+    end
+  end
+  
+  %w(collection_select select check_box email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
     define_method(method_name) do |name, *args|
       @name = name
       @options = args.extract_options!
