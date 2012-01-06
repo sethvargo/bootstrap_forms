@@ -25,7 +25,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
       
       clearfix_div do
         label_field + input_div do
-          extras {super}
+          extras { super(name, *(@args << @options)) }
         end
       end
     end
@@ -105,7 +105,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     @options[:class] = 'btn primary'
     
     content_tag(:div, :class => 'actions') do
-      super(name, *args << @options) + ' ' + link_to('Cancel', :back, :class => 'btn')
+      super(name, *(args << @options)) + ' ' + link_to('Cancel', :back, :class => 'btn')
     end
   end
   
