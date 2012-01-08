@@ -3,10 +3,10 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "bootstrap-forms"
-  s.version     = "0.0.3"
+  s.version     = "0.0.4"
   s.author      = "Seth Vargo"
   s.email       = "sethvargo@gmail.com"
-  s.homepage    = "https://github.com/sethvargo/bootstrap_forms"
+  s.homepage    = "https://github.com/sethvargo/bootstrap-forms"
   s.summary     = %q{Bootstrap Forms makes Twitter's Bootstrap on Rails easy!}
   s.description = %q{Bootstrap Forms makes Twitter's Bootstrap on Rails easy to use by creating helpful form builders that minimize markup in your views.}
 
