@@ -1,2 +1,0 @@
-Description:
-  The bootstrap_forms generator copies the form builder into `app/form_builders` and the initializer in `config/initializers`.

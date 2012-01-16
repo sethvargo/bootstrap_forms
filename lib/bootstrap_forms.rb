@@ -1,3 +1,1 @@
-module BootstrapForms
-  # Your code goes here...
-end
+require 'bootstrap_forms/railtie' if defined?(Rails)
