@@ -8,47 +8,51 @@ Installation
 ------------
 Add it to your `Gemfile`:
 
-    gem 'bootstrap-forms'
+    gem 'bootstrap_forms'
 
-Don't forget to run the `bundle` command. Run the generator:
+Don't forget to run the `bundle` command. The gem will add 2 methods `bootstrap_form_for` and `bootstrap_fields_for` for use in your project. This is different from `bootstrap_forms < 0.1.0`. In previous versions, the default form builders were overridden by default. With backlash from various community members, this is no longer the default.
 
-    rails g bootstrap_forms:install
-
-This will create 2 files in your project.
-
-Restart your Rails server.
+Be sure to restart your Rails server after installing the gem.
 
 Why?
 ----
 With Bootstrap, you would need the following code for a form:
 
-    # using HAML
-    = form_for @model do |f|
-      .clearfix
-        %label MyLabel
-        .input
-          = f.text_area :field, :opts => {...}
+```haml
+/ using haml
+= form_for @model do |f|
+  .clearfix
+    %label MyLabel
+    .input
+      = f.text_area :field, :opts => {...}
+```
 
-    # using ERB
-    <%= form_for @model do |f| %>
-      <div class="clearfix">
-        <label>MyLabel</label>
-        <div class="input">
-          <%= f.text_area :field, :opts => {...} %>
-        </div>
-      </div>
-    <% end %>
+```erb
+<!-- using ERB -->
+<%= form_for @model do |f| %>
+  <div class="clearfix">
+    <label>MyLabel</label>
+    <div class="input">
+      <%= f.text_area :field, :opts => {...} %>
+    </div>
+  </div>
+<% end %>
+```
 
 Using Bootstrap Forms, this is **much** simpler:
 
-    # using HAML
-    = form_for @model do |f|
-      = f.text_area :field, :opts => {...}
-    
-    # using ERB
-    <%= form_for @model do |f| %>
-      <%= f.text_area :field, :opts => {...} %>
-    <% end %>
+```haml
+/ using HAML
+= bootstrap_form_for @model do |f|
+  = f.text_area :field, :opts => {...}
+```
+
+```erb
+<!-- using ERB -->
+<%= bootstrap_form_for @model do |f| %>
+  <%= f.text_area :field, :opts => {...} %>
+<% end %>
+```
 
 The custom form builder will automatically wrap everything for you. This helps clean up your view layer significantly!
 
@@ -59,40 +63,52 @@ Just when you thought you were done... Bootstrap Forms includes additional form 
 ### collection_check_boxes
 `collection_check_boxes` behaves very similarly to `collection_select`:
 
-    = f.collection_check_boxes :category_ids, Category.all, :id, :name
+```haml
+= f.collection_check_boxes :category_ids, Category.all, :id, :name
+```
 
 ### collection_radio_buttons
 See description above...
 
-    = f.collection_radio_buttons :primary_category_id, Category.all, :id, :name
+```haml
+= f.collection_radio_buttons :primary_category_id, Category.all, :id, :name
+```
 
 Uneditable Field
 ----------------
 Bootstrap Forms adds another helper method that generates the necessary markup for uneditable fields:
 
-    = f.uneditable_field :name
+```haml
+= f.uneditable_field :name
+```
 
-generates:
+yields:
 
-    <div class="clearfix">
-      <label for="organization_name">Organization Name</label>
-      <div class="input">
-        <span class="uneditable-input">The Variety Hour</span>
-      </div>
-    </div>
+```html
+<div class="clearfix">
+  <label for="organization_name">Organization Name</label>
+  <div class="input">
+    <span class="uneditable-input">The Variety Hour</span>
+  </div>
+</div>
+```
 
 Submit Tag
 ----------
 Bootstrap Forms also adds a default actions panel when you call `f.submit`:
 
-    = f.submit
+```haml
+= f.submit
+```
     
 generates:
 
-    <div class="actions">
-      <input type="submit" value="..." class="btn primary" />
-      <a href="..." class="btn">Cancel</a>
-    </div>
+```html
+<div class="actions">
+  <input type="submit" value="..." class="btn primary" />
+  <a href="..." class="btn">Cancel</a>
+</div>
+```
 
 Pretty swell if you ask me.
 
@@ -111,43 +127,43 @@ You can add as many options to any form helper tag. If they are interpreted by B
   <tr>
     <th>help_inline</th>
     <td>Add inline help text</td>
-    <td>`= f.text_field :name, :help_inline => 'help me!'`</td>
+    <td>= f.text_field :name, :help_inline => 'help me!'</td>
   </tr>
   <tr>
     <th>help_block</th>
     <td>Add block help text (below)</td>
-    <td>`= f.text_field :name, :help_block => 'help me!'`</td>
+    <td>= f.text_field :name, :help_block => 'help me!'</td>
   </tr>
   <tr>
     <th>error</th>
     <td>Styles the field as error (red)</td>
-    <td>`= f.text_field :name, :error => 'This is an error!'`</td>
+    <td>= f.text_field :name, :error => 'This is an error!'</td>
   </tr>
   <tr>
     <th>success</th>
     <td>Styles the field as success (green)</td>
-    <td>`= f.text_field :name, :success => 'This checked out OK'`</td>
+    <td>= f.text_field :name, :success => 'This checked out OK'</td>
   </tr>
   <tr>
     <th>warning</th>
     <td>Styles the field as warning (yellow)</td>
-    <td>`= f.text_field :name, :warning => 'Take a look at this...'`</td>
+    <td>= f.text_field :name, :warning => 'Take a look at this...'</td>
   </tr>
   <tr>
     <th>prepend</th>
     <td>Adds special text to the front of the input</td>
-    <td>`= f.text_field :name, :prepend => '@'`</td>
+    <td>= f.text_field :name, :prepend => '@'</td>
   </tr>
   <tr>
     <th>append</th>
     <td>Adds special text at the end of the input</td>
-    <td>`= f.text_field :name, :append => '@'`</td>
+    <td>= f.text_field :name, :append => '@'</td>
   </tr>
 </table>
 
 License
 -------
-Copyright (c) 2011 Seth Vargo
+Copyright (c) 2012 Seth Vargo
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
