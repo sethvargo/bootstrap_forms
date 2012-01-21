@@ -17,6 +17,11 @@ module BootstrapForms
 	      '' # return empty string
 	    end
 	  end
+	  
+	  def bootstrap_fields_for(record_name, record_object = nil, options = {}, &block)
+			options[:builder] = BootstrapForms::FormBuilder
+			fields_for(record_name, record_object, options, &block)
+		end
  
 	  %w(collection_select select check_box email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
 	    define_method(method_name) do |name, *args|

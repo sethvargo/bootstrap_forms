@@ -9,11 +9,6 @@ module ActionView
 					f.error_messages.html_safe + capture(f, &block).html_safe
 				end
 			end
-			
-			def bootstrap_fields_for(record_name, record_object = nil, options = {}, &block)
-				options[:builder] = BootstrapForms::FormBuilder
-				fields_for(record_name, record_object, options, &block)
-			end
     end
   end
 end
