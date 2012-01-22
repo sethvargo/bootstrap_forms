@@ -1,14 +1,14 @@
 require 'bootstrap_forms/form_builder'
 
 module ActionView
-	module Helpers
-		module FormHelper
-			def bootstrap_form_for(record, options = {}, &block)
-				options[:builder] = BootstrapForms::FormBuilder
-				form_for(record, options) do |f|
-					f.error_messages.html_safe + capture(f, &block).html_safe
-				end
-			end
+  module Helpers
+    module FormHelper
+      def bootstrap_form_for(record, options = {}, &block)
+        options[:builder] = BootstrapForms::FormBuilder
+        form_for(record, options) do |f|
+          f.error_messages.html_safe + capture(f, &block).html_safe
+        end
+      end
     end
   end
 end
