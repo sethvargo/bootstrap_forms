@@ -4,8 +4,8 @@ module BootstrapForms
 
     def error_messages
       if object.errors.full_messages.any?
-        content_tag(:div, :class => 'alert-message block-message error') do
-          link_to('&times;'.html_safe, '#', :class => 'close') +
+        content_tag(:div, :class => 'alert alert-error') do
+          link_to('&times;'.html_safe, '#', {:class => 'close', :data => { :dismiss => "alert" }}) +
           content_tag(:p, "<strong>Oh snap! You got an error!</strong> Fix the errors below and try again.".html_safe) +
           content_tag(:ul) do
             object.errors.full_messages.map do |message|
@@ -108,10 +108,10 @@ module BootstrapForms
       @options = args.extract_options!
       @args = args
 
-      @options[:class] = 'btn primary'
+      @options[:class] = 'btn btn-primary'
 
-      content_tag(:div, :class => 'actions') do
-        super(name, *(args << @options)) + ' ' + link_to('Cancel', @options[:back_path] || :back, :class => 'btn')
+      content_tag(:div, :class => 'form-actions') do
+        super(name, *(args << @options)) + ' ' + link_to('Cancel', @options[:back_path] || :back, :class => 'btn cancel')
       end
     end
 
@@ -119,7 +119,7 @@ module BootstrapForms
     def clearfix_div(&block)
       @options[:error] = object.errors[@name].collect{|e| "#{@options[:label] || @name} #{e}".humanize}.join(', ') unless object.errors[@name].empty?
 
-      klasses = ['clearfix']
+      klasses = ['control-group']
       klasses << 'error' if @options[:error]
       klasses << 'success' if @options[:success]
       klasses << 'warning' if @options[:warning]
@@ -129,7 +129,7 @@ module BootstrapForms
     end
 
     def input_div(&block)
-      content_tag(:div, :class => 'input') do
+      content_tag(:div, :class => 'controls') do
         if @options[:append] || @options[:prepend]
           klass = 'input-prepend' if @options[:prepend]
           klass = 'input-append' if @options[:append]
@@ -142,7 +142,7 @@ module BootstrapForms
 
     def label_field(&block)
       required = object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
-      label(@name, block_given? ? block : @options[:label], :class => ('required' if required))
+      label(@name, block_given? ? block : @options[:label], :class => 'control-label' + (' required' if required))
     end
 
     %w(help_inline error success warning help_block append prepend).each do |method_name|
