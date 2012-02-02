@@ -4,6 +4,12 @@ Bootstrap Forms is a nice Rails generator that makes working with [Bootstrap (by
 
 Forms with Bootstrap are crowded with additional layout markup. While it's necessary, you shouldn't have to type it every time you create a form! That's why I created Bootstrap Forms.
 
+Bootstrap 2.0 Compliant!
+------------------------
+A super special thanks to [vincenzor](https://github.com/vincenzor) for updating `bootstrap_forms` to comply with the new methods and features in Twitter Bootstrap 2.0. 
+
+To get these new features, ensure you are using `bootstrap_forms ~> 1.0.0`.
+
 Note/Caution/Warning
 --------------------
 There were **major** changes in the release of version `0.1.0`:
@@ -35,31 +41,12 @@ With Bootstrap, you would need the following code for a form:
       = f.text_area :field, :opts => {...}
 ```
 
-```erb
-<!-- using ERB -->
-<%= form_for @model do |f| %>
-  <div class="clearfix">
-    <label>MyLabel</label>
-    <div class="input">
-      <%= f.text_area :field, :opts => {...} %>
-    </div>
-  </div>
-<% end %>
-```
-
 Using Bootstrap Forms, this is **much** simpler:
 
 ```haml
 / using HAML
 = bootstrap_form_for @model do |f|
   = f.text_area :field, :opts => {...}
-```
-
-```erb
-<!-- using ERB -->
-<%= bootstrap_form_for @model do |f| %>
-  <%= f.text_area :field, :opts => {...} %>
-<% end %>
 ```
 
 The custom form builder will automatically wrap everything for you. This helps clean up your view layer significantly!
