@@ -33,7 +33,7 @@ Why?
 With Bootstrap, you would need the following code for a form:
 
 ```haml
-/ using haml
+/ using HAML
 = form_for @model do |f|
   .clearfix
     %label MyLabel
@@ -155,6 +155,13 @@ You can add as many options to any form helper tag. If they are interpreted by B
     <td>= f.text_field :name, :append => '@'</td>
   </tr>
 </table>
+
+Contributing
+------------
+I'm pretty dam active on github. Fork and submit a pull request. Most of my pull requests are merged the same day. Make sure you:
+
+ - Squash into a single commit (unless it makes sense to have multiple commits)
+ - Document your changes
 
 License
 -------
