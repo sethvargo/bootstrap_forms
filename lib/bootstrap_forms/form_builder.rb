@@ -23,7 +23,7 @@ module BootstrapForms
       fields_for(record_name, record_object, options, &block)
     end
 
-    %w(collection_select select check_box email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
+    %w(collection_select select country_select check_box email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
       define_method(method_name) do |name, *args|
         @name = name
         @options = args.extract_options!
