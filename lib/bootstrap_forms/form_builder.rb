@@ -23,7 +23,7 @@ module BootstrapForms
       fields_for(record_name, record_object, options, &block)
     end
 
-    %w(collection_select select check_box email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
+    %w(collection_select select email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
       define_method(method_name) do |name, *args|
         @name = name
         @options = args.extract_options!
@@ -32,6 +32,20 @@ module BootstrapForms
         clearfix_div do
           label_field + input_div do
             extras { super(name, *(@args << @options)) }
+          end
+        end
+      end
+    end
+
+    def check_box(name, *args)
+      @name = name
+      @options = args.extract_options!
+      @args = args
+
+      clearfix_div do
+        input_div do
+          label(@name, :class => [ 'checkbox', required_class ].compact.join(' ')) do
+            extras { super(name, *(@args << @options)) + object.class.human_attribute_name(name) }
           end
         end
       end
@@ -141,8 +155,15 @@ module BootstrapForms
     end
 
     def label_field(&block)
-      required = object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
-      label(@name, block_given? ? block : @options[:label], :class => 'control-label' + (required ? ' required' : ''))
+      label(@name, block_given? ? block : @options[:label], :class => [ 'control-label', required_class ].compact.join(' '))
+    end
+
+    def required_class
+      if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
+        'required'
+      else
+        nil
+      end
     end
 
     %w(help_inline error success warning help_block append prepend).each do |method_name|
