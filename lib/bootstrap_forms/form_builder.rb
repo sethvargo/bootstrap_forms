@@ -149,7 +149,7 @@ module BootstrapForms
       define_method(method_name) do |*args|
         return '' unless value = @options[method_name.to_sym]
         case method_name
-        when 'help-block'
+        when 'help_block'
           element = :p
           klass = 'help-block'
         when 'append', 'prepend'
