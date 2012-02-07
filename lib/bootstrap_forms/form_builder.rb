@@ -125,7 +125,7 @@ module BootstrapForms
       @options[:class] = 'btn btn-primary'
 
       content_tag(:div, :class => 'form-actions') do
-        super(name, *(args << @options)) + ' ' + link_to('Cancel', @options[:back_path] || :back, :class => 'btn cancel')
+        super(name, *(args << @options)) + ' ' + link_to(I18n.t('bootstrap_forms.buttons.cancel'), @options[:back_path] || :back, :class => 'btn cancel')
       end
     end
 
