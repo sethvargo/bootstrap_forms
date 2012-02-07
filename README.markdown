@@ -156,6 +156,22 @@ You can add as many options to any form helper tag. If they are interpreted by B
   </tr>
 </table>
 
+Internationalization/Custom Errors
+----------------------------------
+As of `1.0.2`, `bootstrap_forms` supports I18n! More support is being added, but you can change the error header and cancel button like this:
+
+```yaml
+# config/locales/en.yml
+en:
+  bootstrap_forms:
+    errors:
+      header: 'Your %{model} is wrong!'
+    buttons:
+      cancel: 'Forget it!'
+```
+
+Obviously you can also change to a different `lang.yml` file and use the same syntax.
+
 Contributing
 ------------
 I'm pretty dam active on github. Fork and submit a pull request. Most of my pull requests are merged the same day. Make sure you:

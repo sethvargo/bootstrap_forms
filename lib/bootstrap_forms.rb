@@ -1,1 +1,1 @@
-require 'bootstrap_forms/railtie' if defined?(Rails)
+require 'bootstrap_forms/engine' if defined?(Rails)
