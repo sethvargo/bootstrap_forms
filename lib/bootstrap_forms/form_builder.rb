@@ -23,7 +23,7 @@ module BootstrapForms
       fields_for(record_name, record_object, options, &block)
     end
 
-    %w(collection_select select check_box email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
+    %w(collection_select select country_select check_box email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
       define_method(method_name) do |name, *args|
         @name = name
         @options = args.extract_options!
@@ -142,16 +142,24 @@ module BootstrapForms
 
     def label_field(&block)
       required = object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
-      label(@name, block_given? ? block : @options[:label], :class => 'control-label' + (' required' if required))
+      label(@name, block_given? ? block : @options[:label], :class => 'control-label' + (required ? ' required' : ''))
     end
 
     %w(help_inline error success warning help_block append prepend).each do |method_name|
       define_method(method_name) do |*args|
         return '' unless value = @options[method_name.to_sym]
-        klass = 'help-inline'
-        klass = 'help-block' if method_name == 'help_block'
-        klass = 'add-on' if method_name == 'append' || method_name == 'prepend'
-        content_tag(:span, value, :class => klass)
+        case method_name
+        when 'help_block'
+          element = :p
+          klass = 'help-block'
+        when 'append', 'prepend'
+          element = :span
+          klass = 'add-on'
+        else
+          element = :span
+          klass = 'help-inline'
+        end
+        content_tag(element, value, :class => klass)
       end
     end
 
