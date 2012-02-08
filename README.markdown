@@ -24,7 +24,7 @@ Add it to your `Gemfile`:
 
     gem 'bootstrap_forms'
 
-Don't forget to run the `bundle` command. The gem will add 2 methods `bootstrap_form_for` and `bootstrap_fields_for` for use in your project. This is different from `bootstrap_forms < 0.1.0`. In previous versions, the default form builders were overridden by default. With backlash from various community members, this is no longer the default.
+Don't forget to run the `bundle` command. The gem will add the method `bootstrap_form_for` for use in your project. This is different from `bootstrap_forms < 0.1.0`. In previous versions, the default form builders were overridden by default. With backlash from various community members, this is no longer the default.
 
 Be sure to restart your Rails server after installing the gem.
 
