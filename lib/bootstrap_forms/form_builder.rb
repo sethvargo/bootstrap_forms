@@ -151,7 +151,7 @@ module BootstrapForms
     end
 
     def required_class
-      'required' if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
+      return 'required' if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
       nil
     end
 
