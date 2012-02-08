@@ -142,7 +142,7 @@ module BootstrapForms
 
     def label_field(&block)
       required = object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
-      label(@name, block_given? ? block : @options[:label], :class => 'control-label' + (' required' if required))
+      label(@name, block_given? ? block : @options[:label], :class => 'control-label' + (required ? ' required' : ''))
     end
 
     %w(help_inline error success warning help_block append prepend).each do |method_name|
