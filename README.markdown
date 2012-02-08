@@ -69,6 +69,14 @@ See description above...
 = f.collection_radio_buttons :primary_category_id, Category.all, :id, :name
 ```
 
+### radio_buttons
+
+```haml
+= f.radio_buttons :published, { "Published" => true, "Unpublished" => false }
+```
+
+Ruby 1.8 doesn't guarantee hashes are ordered. If you care, pass in nested arrays or `ActiveSupport::OrderedHash`.
+
 Uneditable Input
 ----------------
 Bootstrap Forms adds another helper method that generates the necessary markup for uneditable inputs:
