@@ -6,7 +6,7 @@ module BootstrapForms
       if object.errors.full_messages.any?
         content_tag(:div, :class => 'alert alert-block alert-error') do
           link_to('&times;'.html_safe, '#', {:class => 'close', :data => { :dismiss => 'alert' }}) +
-          content_tag(:h4, I18n.t('bootstrap_forms.errors.header', :model => object.class.model_name.humanize), :class => 'alert-heading') +
+          content_tag(:h4, I18n.t('bootstrap_forms.errors.header', :model => object.class.model_name.human), :class => 'alert-heading') +
           content_tag(:ul) do
             object.errors.full_messages.map do |message|
               content_tag(:li, message)
@@ -40,7 +40,7 @@ module BootstrapForms
       control_group_div do
         input_div do
           label(@name, :class => [ 'checkbox', required_class ].compact.join(' ')) do
-            extras { super(name, *(@args << @field_options)) + object.class.human_attribute_name(name) }
+            extras { super(name, *(@args << @field_options)) + human_attribute_name }
           end
         end
       end
@@ -118,7 +118,7 @@ module BootstrapForms
 
     private
     def control_group_div(&block)
-      @field_options[:error] = object.errors[@name].collect{|e| "#{@field_options[:label] || @name} #{e}".humanize}.join(', ') unless object.errors[@name].empty?
+      @field_options[:error] = error_string
 
       klasses = ['control-group']
       klasses << 'error' if @field_options[:error]
@@ -127,6 +127,19 @@ module BootstrapForms
       klass = klasses.join(' ')
 
       content_tag(:div, :class => klass, &block)
+    end
+
+    def error_string
+      errors = object.errors[@name]
+      if errors.present?
+        errors.map { |e|
+          "#{@options[:label] || human_attribute_name} #{e}"
+        }.join(", ")
+      end
+    end
+
+    def human_attribute_name
+      object.class.human_attribute_name(@name)
     end
 
     def input_div(&block)
