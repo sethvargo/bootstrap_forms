@@ -4,9 +4,9 @@ module BootstrapForms
 
     def error_messages
       if object.errors.full_messages.any?
-        content_tag(:div, :class => 'alert alert-error') do
-          link_to('&times;'.html_safe, '#', {:class => 'close', :data => { :dismiss => "alert" }}) +
-          content_tag(:p, I18n.t('bootstrap_forms.errors.header', :model => object.class.model_name.humanize)) +
+        content_tag(:div, :class => 'alert alert-block alert-error') do
+          link_to('&times;'.html_safe, '#', {:class => 'close', :data => { :dismiss => 'alert' }}) +
+          content_tag(:h4, I18n.t('bootstrap_forms.errors.header', :model => object.class.model_name.humanize), :class => 'alert-heading') +
           content_tag(:ul) do
             object.errors.full_messages.map do |message|
               content_tag(:li, message)
@@ -61,7 +61,7 @@ module BootstrapForms
           content_tag(:div, :class => 'controls') do
             records.collect do |record|
               element_id = "#{object_name}_#{attribute}_#{record.send(record_id)}"
-              checkbox = check_box_tag("#{object_name}[#{attribute}][]", record.send(record_id), (object.send(attribute) || []).include?(record.send(record_id)), @options.merge({:id => element_id}))
+              checkbox = check_box_tag("#{object_name}[#{attribute}][]", record.send(record_id), [object.send(attribute)].flatten.include?(record.send(record_id)), @options.merge({:id => element_id}))
 
               content_tag(:label, :class => ['checkbox', ('inline' if @options[:inline])].compact.join(' ')) do
                 checkbox + content_tag(:span, record.send(record_name))
