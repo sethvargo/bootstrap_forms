@@ -5,7 +5,7 @@ module BootstrapForms
     def error_messages
       if object.errors.full_messages.any?
         content_tag(:div, :class => 'alert alert-block alert-error validation-errors') do
-          content_tag(:h4, I18n.t('bootstrap_forms.errors.header', :model => object.class.model_name.humanize), :class => 'alert-heading') +
+          content_tag(:h4, I18n.t('bootstrap_forms.errors.header', :model => object.class.model_name.human), :class => 'alert-heading') +
           content_tag(:ul) do
             object.errors.full_messages.map do |message|
               content_tag(:li, message)
@@ -44,7 +44,7 @@ module BootstrapForms
       control_group_div do
         input_div do
           label(@name, :class => [ 'checkbox', required_class ].compact.join(' ')) do
-            extras { super(name, *(@args << @options)) + object.class.human_attribute_name(name) }
+            extras { super(name, *(@args << @options)) + human_attribute_name }
           end
         end
       end
@@ -122,7 +122,7 @@ module BootstrapForms
 
     private
     def control_group_div(&block)
-      @options[:error] = object.errors[@name].collect{|e| "#{@options[:label] || @name} #{e}".humanize}.join(', ') unless object.errors[@name].empty?
+      @options[:error] = error_string
 
       klasses = ['control-group']
       klasses << 'error' if @options[:error]
@@ -131,6 +131,19 @@ module BootstrapForms
       klass = klasses.join(' ')
 
       content_tag(:div, :class => klass, &block)
+    end
+
+    def error_string
+      errors = object.errors[@name]
+      if errors.present?
+        errors.map { |e|
+          "#{@options[:label] || human_attribute_name} #{e}"
+        }.join(", ")
+      end
+    end
+
+    def human_attribute_name
+      object.class.human_attribute_name(@name)
     end
 
     def input_div(&block)
@@ -150,7 +163,7 @@ module BootstrapForms
     end
 
     def required_class
-      'required' if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
+      return 'required' if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
       nil
     end
 
