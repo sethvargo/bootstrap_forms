@@ -1,0 +1,6 @@
+sv:
+  bootstrap_forms:
+    errors:
+      header: "Kunde inte spara på grund av nedanstående fel:"
+    buttons:
+      cancel: 'Avbryt'
