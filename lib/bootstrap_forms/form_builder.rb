@@ -4,8 +4,7 @@ module BootstrapForms
 
     def error_messages
       if object.errors.full_messages.any?
-        content_tag(:div, :class => 'alert alert-block alert-error') do
-          link_to('&times;'.html_safe, '#', {:class => 'close', :data => { :dismiss => 'alert' }}) +
+        content_tag(:div, :class => 'alert alert-block alert-error validation-errors') do
           content_tag(:h4, I18n.t('bootstrap_forms.errors.header', :model => object.class.model_name.humanize), :class => 'alert-heading') +
           content_tag(:ul) do
             object.errors.full_messages.map do |message|
