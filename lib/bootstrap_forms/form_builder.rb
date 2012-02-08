@@ -22,7 +22,7 @@ module BootstrapForms
       fields_for(record_name, record_object, options, &block)
     end
 
-    %w(collection_select select email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
+    %w(collection_select select email_field file_field number_field password_field phone_field range_field search_field telephone_field text_area text_field url_field).each do |method_name|
       define_method(method_name) do |name, *args|
         @name = name
         @options = args.extract_options!
@@ -46,6 +46,21 @@ module BootstrapForms
           label(@name, :class => [ 'checkbox', required_class ].compact.join(' ')) do
             extras { super(name, *(@args << @options)) + human_attribute_name }
           end
+        end
+      end
+    end
+
+    def radio_buttons(name, values={}, opts={})
+      @name = name
+      @options = opts
+
+      control_group_div do
+        label_field + input_div do
+          values.map do |text, value|
+            label("#{@name}_#{value}", :class => [ 'radio', required_class ].compact.join(' ')) do
+              extras { radio_button(name, value, @options) + text }
+            end
+          end.join.html_safe
         end
       end
     end
