@@ -113,6 +113,8 @@ generates:
 </div>
 ```
 
+You can skip the cancel button by passing the `:include_cancel` button a `false` value.
+
 Pretty swell if you ask me.
 
 Adding More Options
