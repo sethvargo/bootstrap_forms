@@ -69,12 +69,12 @@ See description above...
 = f.collection_radio_buttons :primary_category_id, Category.all, :id, :name
 ```
 
-Uneditable Field
+Uneditable Input
 ----------------
-Bootstrap Forms adds another helper method that generates the necessary markup for uneditable fields:
+Bootstrap Forms adds another helper method that generates the necessary markup for uneditable inputs:
 
 ```haml
-= f.uneditable_field :name
+= f.uneditable_input :name
 ```
 
 yields:
