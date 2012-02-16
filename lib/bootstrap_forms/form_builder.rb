@@ -118,18 +118,20 @@ module BootstrapForms
       end
     end
 
-    def submit(name = nil, *args)
-      @name = name
-      @field_options = args.extract_options!
-      @args = args
+    %w(submit button).each do |method_name|
+      define_method(method_name) do |name=nil, *args|
+        @name = name
+        @field_options = args.extract_options!
+        @args = args
 
-      @field_options[:class] = 'btn btn-primary'
+        @field_options[:class] = 'btn btn-primary'
 
-      content_tag(:div, :class => 'form-actions') do
-        if @field_options[:include_cancel] == false
-          super(name, *(args << @field_options))
-        else
-          super(name, *(args << @field_options)) + ' ' + link_to(I18n.t('bootstrap_forms.buttons.cancel'), (@field_options[:back] || :back), :class => 'btn cancel')
+        content_tag(:div, :class => 'form-actions') do
+          if @field_options[:include_cancel] == false
+            super(name, *(args << @field_options))
+          else
+            super(name, *(args << @field_options)) + ' ' + link_to(I18n.t('bootstrap_forms.buttons.cancel'), (@field_options[:back] || :back), :class => 'btn cancel')
+          end
         end
       end
     end
