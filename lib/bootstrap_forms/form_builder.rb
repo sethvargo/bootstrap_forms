@@ -17,7 +17,7 @@ module BootstrapForms
       end
     end
 
-    %w(collection_select select email_field file_field number_field password_field phone_field radio_button range_field search_field telephone_field text_area text_field url_field).each do |method_name|
+    %w(collection_select select email_field file_field number_field password_field phone_field range_field search_field telephone_field text_area text_field url_field).each do |method_name|
       define_method(method_name) do |name, *args|
         @name = name
         @field_options = args.extract_options!
