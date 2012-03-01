@@ -58,19 +58,34 @@ describe "BootstrapForms::FormBuilder" do
     
       (%w{email file number password range search text url }.map{|field| ["#{field}_field",field]} + [["telephone_field", "tel"], ["phone_field", "tel"]]).each do |field, type|
         describe "#{field}" do
-          before(:each) do
-            @result = @builder.send(field, "name")
-          end
+          context "result" do
+            before(:each) do
+              @result = @builder.send(field, "name")
+            end
       
-          it "is wrapped" do
-            @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\">.*<\/div><\/div>$/
-          end
+            it "is wrapped" do
+              @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\">.*<\/div><\/div>$/
+            end
    
-          it "has an input of type: #{type}" do
-            @result.should match /<input.*type=["#{type}"]/
-          end
-        end
-      end
+            it "has an input of type: #{type}" do
+              @result.should match /<input.*type=["#{type}"]/
+            end
+          end # result
+          
+          context "call expectations" do
+            %w(control_group_div label_field input_div extras).map(&:to_sym).each do |method|
+              it "calls #{method}" do
+                @builder.should_receive(method).and_return("")
+              end
+            end
+
+            after(:each) do
+              @builder.send(field, "name")
+            end
+          end # call expectations
+          
+        end # field
+      end # fields
     end # no options
   
     describe "extras" do
