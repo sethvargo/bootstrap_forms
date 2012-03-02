@@ -31,6 +31,14 @@ describe "BootstrapForms::FormBuilder" do
           it "has error title" do
             @result.should match /<h4 class="alert-heading">#{I18n.t('bootstrap_forms.errors.header', :model => Project.model_name.human)}<\/h4>/ 
           end
+          
+          it "has error message on field" do
+            @builder.text_field("name").should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline\">Name is invalid</span></div></div>"
+          end
+          
+          it "joins passed error message and validation errors with ', '" do
+            @builder.text_field("name", :error => 'This is an error!').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline\">This is an error!, Name is invalid</span></div></div>"
+          end
         end
       end
     
@@ -117,6 +125,39 @@ describe "BootstrapForms::FormBuilder" do
         end
       end
     end # extras
+
+    describe "form actions" do
+      context "actions" do
+        it "has wrapping div" do
+          @builder.actions.should == '<div class="form-actions"></div>'
+        end
+        
+        it "adds additional block content" do
+          @builder.actions do
+            @builder.submit
+          end.should == "<div class=\"form-actions\"><input class=\"btn btn-primary\" name=\"commit\" type=\"submit\" value=\"Create Project\" /></div>"
+        end
+      end
+      
+      context "submit" do
+        it "adds btn primary class" do
+          @builder.submit.should == "<input class=\"btn btn-primary\" name=\"commit\" type=\"submit\" value=\"Create Project\" />"
+        end
+      end
+      
+      context "button" do
+        it "adds btn primary class" do
+          @builder.submit.should == "<input class=\"btn btn-primary\" name=\"commit\" type=\"submit\" value=\"Create Project\" />"
+        end
+      end
+      
+      context "cancel" do
+        it "creates link with correct class" do
+          @builder.should_receive(:link_to).with(I18n.t('bootstrap_forms.buttons.cancel'), :back, :class => 'btn cancel').and_return("")
+          @builder.cancel
+        end
+      end
+    end # actions
   end # setup builder
   
 end
