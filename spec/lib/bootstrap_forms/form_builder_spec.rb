@@ -9,8 +9,6 @@ describe "BootstrapForms::FormBuilder" do
       @builder = BootstrapForms::FormBuilder.new(:item, @project, @template, {}, proc {})
     end
     describe "with no options" do
-
-    
       describe "error_messages" do
         it "returns empty string without errors" do
           @builder.error_messages.should == ""
@@ -99,7 +97,7 @@ describe "BootstrapForms::FormBuilder" do
         end
         
         it "adds error message and class" do
-          @builder.text_field(:name, :error => 'This is an error!').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /></div></div>"
+          @builder.text_field(:name, :error => 'This is an error!').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline\">This is an error!</span></div></div>"
         end
         
         it "adds success message and class" do
@@ -119,7 +117,6 @@ describe "BootstrapForms::FormBuilder" do
         end
       end
     end # extras
-    
   end # setup builder
   
 end
