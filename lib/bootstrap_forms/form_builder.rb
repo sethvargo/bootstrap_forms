@@ -117,28 +117,44 @@ module BootstrapForms
         end
       end
     end
+    
+    def button(name=nil, *args)
+      @name = name
+      @field_options = args.extract_options!
+      @args = args
 
-    %w(submit button).each do |method_name|
-      define_method(method_name) do |name=nil, *args|
-        @name = name
-        @field_options = args.extract_options!
-        @args = args
+      @field_options[:class] = 'btn btn-primary'
+      super(name, *(args << @field_options))
+    end
+    
+    def submit(name=nil, *args)
+      @name = name
+      @field_options = args.extract_options!
+      @args = args
 
-        @field_options[:class] = 'btn btn-primary'
-
-        content_tag(:div, :class => 'form-actions') do
-          if @field_options[:include_cancel] == false
-            super(name, *(args << @field_options))
-          else
-            super(name, *(args << @field_options)) + ' ' + link_to(I18n.t('bootstrap_forms.buttons.cancel'), (@field_options[:back] || :back), :class => 'btn cancel')
-          end
-        end
+      @field_options[:class] = 'btn btn-primary'
+      super(name, *(args << @field_options))
+    end
+    
+    def cancel(*args)
+      @field_options = args.extract_options!
+      link_to(I18n.t('bootstrap_forms.buttons.cancel'), (@field_options[:back] || :back), :class => 'btn cancel')
+    end
+    
+    def actions(&block)
+      content_tag(:div, :class => 'form-actions') do
+        yield if block_given?
       end
     end
 
     private
     def control_group_div(&block)
-      @field_options[:error] = error_string
+      field_errors = error_string
+      if @field_options[:error] 
+        (@field_options[:error] << ", " << field_errors) if field_errors
+      else
+        @field_options[:error] = field_errors
+      end
 
       klasses = ['control-group']
       klasses << 'error' if @field_options[:error]
