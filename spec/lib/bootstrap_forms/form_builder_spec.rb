@@ -8,6 +8,7 @@ describe "BootstrapForms::FormBuilder" do
       @template.output_buffer = ""
       @builder = BootstrapForms::FormBuilder.new(:item, @project, @template, {}, proc {})
     end
+    
     describe "with no options" do
       describe "error_messages" do
         it "returns empty string without errors" do
@@ -61,7 +62,23 @@ describe "BootstrapForms::FormBuilder" do
           @builder.check_box("name").should == "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\" for=\"item_name\"><input name=\"item[name]\" type=\"hidden\" value=\"0\" /><input id=\"item_name\" name=\"item[name]\" type=\"checkbox\" value=\"1\" />Name</label></div></div>"
         end
       end
-    
+      
+      describe "radio_buttons" do
+        it "doesn't use field_options from previously generated field" do
+          @builder.text_field :name, :label => 'Heading', :help_inline => 'Inline help', :help_block => 'Block help'
+          @builder.radio_buttons(:name, {"One"=>"1", "Two"=>"2"}).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><label class=\"radio\" for=\"item_name_1\"><input id=\"item_name_1\" name=\"item[name]\" type=\"radio\" value=\"1\" />One</label><label class=\"radio\" for=\"item_name_2\"><input id=\"item_name_2\" name=\"item[name]\" type=\"radio\" value=\"2\" />Two</label></div></div>"
+        end
+
+        it "sets field_options" do
+          @builder.radio_buttons(:name, {"One" => "1", "Two" => "2"})
+          @builder.instance_variable_get("@field_options").should == {:error => nil}
+        end
+
+        it "generates wrapped input" do
+          @builder.radio_buttons(:name, {"One" => "1", "Two" => "2"}).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><label class=\"radio\" for=\"item_name_1\"><input id=\"item_name_1\" name=\"item[name]\" type=\"radio\" value=\"1\" />One</label><label class=\"radio\" for=\"item_name_2\"><input id=\"item_name_2\" name=\"item[name]\" type=\"radio\" value=\"2\" />Two</label></div></div>"
+        end
+      end
+
       (%w{email file number password range search text url }.map{|field| ["#{field}_field",field]} + [["telephone_field", "tel"], ["phone_field", "tel"]]).each do |field, type|
         describe "#{field}" do
           context "result" do

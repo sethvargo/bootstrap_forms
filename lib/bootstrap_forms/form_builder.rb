@@ -48,7 +48,7 @@ module BootstrapForms
     def radio_buttons(name, values={}, opts={})
       @name = name
       @options = opts
-
+      @field_options = {}
       control_group_div do
         label_field + input_div do
           values.map do |text, value|
