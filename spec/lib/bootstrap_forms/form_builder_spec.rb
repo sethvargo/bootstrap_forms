@@ -60,6 +60,10 @@ describe "BootstrapForms::FormBuilder" do
         it "generates wrapped input" do
           @builder.check_box("name").should == "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\" for=\"item_name\"><input name=\"item[name]\" type=\"hidden\" value=\"0\" /><input id=\"item_name\" name=\"item[name]\" type=\"checkbox\" value=\"1\" />Name</label></div></div>"
         end
+
+        it "allows custom label" do
+          @builder.check_box("name", :label => "custom label").should match /custom label<\/label>/
+        end
       end
     
       (%w{email file number password range search text url }.map{|field| ["#{field}_field",field]} + [["telephone_field", "tel"], ["phone_field", "tel"]]).each do |field, type|

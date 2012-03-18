@@ -39,7 +39,7 @@ module BootstrapForms
       control_group_div do
         input_div do
           label(@name, :class => [ 'checkbox', required_class ].compact.join(' ')) do
-            extras { super(name, *(@args << @field_options)) + human_attribute_name }
+            extras { super(name, *(@args << @field_options)) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
           end
         end
       end
