@@ -81,6 +81,10 @@ describe "BootstrapForms::FormBuilder" do
         it "generates wrapped input" do
           @builder.radio_buttons(:name, {"One" => "1", "Two" => "2"}).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><label class=\"radio\" for=\"item_name_1\"><input id=\"item_name_1\" name=\"item[name]\" type=\"radio\" value=\"1\" />One</label><label class=\"radio\" for=\"item_name_2\"><input id=\"item_name_2\" name=\"item[name]\" type=\"radio\" value=\"2\" />Two</label></div></div>"
         end
+        
+        it "allows custom label" do
+          @builder.radio_buttons(:name, {"One" => "1", "Two" => "2"}, {:label => "custom label"}).should match /custom label<\/label>/
+        end
       end
 
       (%w{email file number password range search text url }.map{|field| ["#{field}_field",field]} + [["telephone_field", "tel"], ["phone_field", "tel"]]).each do |field, type|
