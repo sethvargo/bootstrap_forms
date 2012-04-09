@@ -9,7 +9,7 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
 
-require File.expand_path(File.join(File.dirname(__FILE__), '../lib/bootstrap_forms/form_builder'))
+require File.expand_path(File.join(File.dirname(__FILE__), '../lib/bootstrap_forms'))
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true

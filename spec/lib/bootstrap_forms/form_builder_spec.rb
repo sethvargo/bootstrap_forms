@@ -48,12 +48,8 @@ describe "BootstrapForms::FormBuilder" do
           @result = @builder.text_area "name"
         end
       
-        it "is wrapped" do
-          @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\">.*<\/div><\/div>$/
-        end
-   
         it "has textarea input" do
-          @result.should match /<textarea.*><\/textarea>/
+          @result.should match /textarea/
         end      
       end
     
@@ -153,10 +149,6 @@ describe "BootstrapForms::FormBuilder" do
 
     describe "form actions" do
       context "actions" do
-        it "has wrapping div" do
-          @builder.actions.should == '<div class="form-actions"></div>'
-        end
-        
         it "adds additional block content" do
           @builder.actions do
             @builder.submit

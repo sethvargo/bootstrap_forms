@@ -20,11 +20,13 @@ module BootstrapForms
       end
 
       def error_string
-        errors = object.errors[@name]
-        if errors.present?
-          errors.map { |e|
-            "#{@options[:label] || human_attribute_name} #{e}"
-          }.join(", ")
+        if respond_to?(:object)
+          errors = object.errors[@name]
+          if errors.present?
+            errors.map { |e|
+              "#{@options[:label] || human_attribute_name} #{e}"
+            }.join(", ")
+          end
         end
       end
 
@@ -45,11 +47,18 @@ module BootstrapForms
       end
 
       def label_field(&block)
-        label(@name, block_given? ? block : @field_options[:label], :class => ['control-label', required_class].compact.join(' '))
+        if respond_to?(:object)
+          label(@name, block_given? ? block : @field_options[:label], :class => ['control-label', required_class].compact.join(' '))
+        else
+          label_tag(@name, block_given? ? block : @field_options[:label], :class => ['control-label', required_class].compact.join(' '))
+        end
       end
 
       def required_class
-        return 'required' if @field_options[:required] || object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
+        return 'required' if @field_options[:required]
+        if respond_to?(:object)
+          return 'required' if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
+        end
         nil
       end
 

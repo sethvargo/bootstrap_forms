@@ -1,6 +1,6 @@
 module BootstrapForms
-  class FormBuilder < ActionView::Helpers::FormBuilder
-    include ::Helpers::Wrappers
+  class FormBuilder < ::ActionView::Helpers::FormBuilder
+    include BootstrapForms::Helpers::Wrappers
     
     delegate :content_tag, :hidden_field_tag, :check_box_tag, :radio_button_tag, :button_tag, :link_to, :to => :@template
 
@@ -47,7 +47,7 @@ module BootstrapForms
       end
     end
 
-    def radio_buttons(name, values={}, opts={})
+    def radio_buttons(name, values = {}, opts = {})
       @name = name
       @options = opts
       @field_options = opts
@@ -119,8 +119,8 @@ module BootstrapForms
         end
       end
     end
-    
-    def button(name=nil, *args)
+
+    def button(name = nil, *args)
       @name = name
       @field_options = args.extract_options!
       @args = args
@@ -128,8 +128,8 @@ module BootstrapForms
       @field_options[:class] = 'btn btn-primary'
       super(name, *(args << @field_options))
     end
-    
-    def submit(name=nil, *args)
+
+    def submit(name = nil, *args)
       @name = name
       @field_options = args.extract_options!
       @args = args
@@ -137,15 +137,19 @@ module BootstrapForms
       @field_options[:class] = 'btn btn-primary'
       super(name, *(args << @field_options))
     end
-    
+
     def cancel(*args)
       @field_options = args.extract_options!
       link_to(I18n.t('bootstrap_forms.buttons.cancel'), (@field_options[:back] || :back), :class => 'btn cancel')
     end
-    
+
     def actions(&block)
       content_tag(:div, :class => 'form-actions') do
-        yield if block_given?
+        if block_given?
+          yield
+        else
+          [submit, cancel].join(' ').html_safe
+        end
       end
     end
   end
