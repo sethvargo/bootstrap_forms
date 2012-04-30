@@ -37,8 +37,9 @@ module BootstrapForms
       def input_div(&block)
         content_tag(:div, :class => 'controls') do
           if @field_options[:append] || @field_options[:prepend]
-            klass = 'input-prepend' if @field_options[:prepend]
-            klass = 'input-append' if @field_options[:append]
+            klass = [""]
+            klass << 'input-prepend' if @field_options[:prepend]
+            klass << 'input-append' if @field_options[:append]
             content_tag(:div, :class => klass, &block)
           else
             yield if block_given?
