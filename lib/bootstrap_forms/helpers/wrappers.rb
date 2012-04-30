@@ -48,10 +48,14 @@ module BootstrapForms
       end
 
       def label_field(&block)
-        if respond_to?(:object)
-          label(@name, block_given? ? block : @field_options[:label], :class => ['control-label', required_class].compact.join(' '))
+        if @field_options[:label] == ""
+          return "".html_safe
         else
-          label_tag(@name, block_given? ? block : @field_options[:label], :class => ['control-label', required_class].compact.join(' '))
+          if respond_to?(:object)
+             label(@name, block_given? ? block : @field_options[:label], :class => ['control-label', required_class].compact.join(' '))
+           else
+             label_tag(@name, block_given? ? block : @field_options[:label], :class => ['control-label', required_class].compact.join(' '))
+           end
         end
       end
 
