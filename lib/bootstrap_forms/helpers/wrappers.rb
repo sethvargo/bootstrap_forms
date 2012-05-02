@@ -48,7 +48,7 @@ module BootstrapForms
       end
 
       def label_field(&block)
-        if @field_options[:label] == ""
+        if @field_options[:label] == false || @field_options[:label] == ""
           return "".html_safe
         else
           if respond_to?(:object)
