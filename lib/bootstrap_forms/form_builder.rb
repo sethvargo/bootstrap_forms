@@ -1,7 +1,7 @@
 module BootstrapForms
   class FormBuilder < ::ActionView::Helpers::FormBuilder
     include BootstrapForms::Helpers::Wrappers
-    
+
     delegate :content_tag, :hidden_field_tag, :check_box_tag, :radio_button_tag, :button_tag, :link_to, :to => :@template
 
     def error_messages
@@ -40,7 +40,7 @@ module BootstrapForms
 
       control_group_div do
         input_div do
-          if @field_options[:label] == ""
+          if @field_options[:label] == false || @field_options[:label] == ''
             extras { super(name, *(@args << @field_options)) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
           else
             label(@name, :class => [ 'checkbox', required_class ].compact.join(' ')) do
