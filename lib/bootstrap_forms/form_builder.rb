@@ -40,13 +40,8 @@ module BootstrapForms
 
       control_group_div do
         input_div do
-<<<<<<< HEAD
           if @field_options[:label] == false || @field_options[:label] == ''
-            extras { super(name, *(@args << @field_options)) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
-=======
-          if @field_options[:label] == ""
             extras { super(name, *(@args << @field_options)) }
->>>>>>> adc4ef2... Removed the text output as label from check boxes, created also when label should be ignored.
           else
             label(@name, :class => [ 'checkbox', required_class ].compact.join(' ')) do
               extras { super(name, *(@args << @field_options)) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
@@ -63,7 +58,7 @@ module BootstrapForms
       control_group_div do
         label_field + input_div do
           values.map do |text, value|
-            if @field_options[:label] == ""
+            if @field_options[:label] == false || @field_options[:label] == ""
               extras { radio_button(name, value, @options) + text }
             else
               label("#{@name}_#{value}", :class => [ 'radio', required_class ].compact.join(' ')) do
