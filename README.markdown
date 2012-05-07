@@ -10,7 +10,7 @@ Bootstrap 2.0 Compliant!
 ------------------------
 A super special thanks to [vincenzor](https://github.com/vincenzor) for updating `bootstrap_forms` to comply with the new methods and features in Twitter Bootstrap 2.0. 
 
-To get these new features, ensure you are using `bootstrap_forms ~> 1.0.0`.
+To get these new features, ensure you are using `bootstrap_forms ~> 2.0.0`.
 
 Note/Caution/Warning
 --------------------
