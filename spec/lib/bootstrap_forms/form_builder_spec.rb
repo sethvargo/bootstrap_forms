@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe "BootstrapForms::FormBuilder" do
   context "given a setup builder" do
@@ -71,9 +71,19 @@ describe "BootstrapForms::FormBuilder" do
       end
 
       describe "radio_buttons" do
+        before do
+          if RUBY_VERSION < '1.9'
+            @options = ActiveSupport::OrderedHash.new
+            @options['One'] = '1'
+            @options['Two'] = '2'
+          else
+            @options = {'One' => '1', 'Two' => '2'}
+          end
+        end
+
         it "doesn't use field_options from previously generated field" do
           @builder.text_field :name, :label => 'Heading', :help_inline => 'Inline help', :help_block => 'Block help'
-          @builder.radio_buttons(:name, {"One"=>"1", "Two"=>"2"}).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><label class=\"radio\" for=\"item_name_1\"><input id=\"item_name_1\" name=\"item[name]\" type=\"radio\" value=\"1\" />One</label><label class=\"radio\" for=\"item_name_2\"><input id=\"item_name_2\" name=\"item[name]\" type=\"radio\" value=\"2\" />Two</label></div></div>"
+          @builder.radio_buttons(:name, @options).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><label class=\"radio\" for=\"item_name_1\"><input id=\"item_name_1\" name=\"item[name]\" type=\"radio\" value=\"1\" />One</label><label class=\"radio\" for=\"item_name_2\"><input id=\"item_name_2\" name=\"item[name]\" type=\"radio\" value=\"2\" />Two</label></div></div>"
         end
 
         it "sets field_options" do
@@ -82,11 +92,11 @@ describe "BootstrapForms::FormBuilder" do
         end
 
         it "generates wrapped input" do
-          @builder.radio_buttons(:name, {"One" => "1", "Two" => "2"}).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><label class=\"radio\" for=\"item_name_1\"><input id=\"item_name_1\" name=\"item[name]\" type=\"radio\" value=\"1\" />One</label><label class=\"radio\" for=\"item_name_2\"><input id=\"item_name_2\" name=\"item[name]\" type=\"radio\" value=\"2\" />Two</label></div></div>"
+          @builder.radio_buttons(:name, @options).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><label class=\"radio\" for=\"item_name_1\"><input id=\"item_name_1\" name=\"item[name]\" type=\"radio\" value=\"1\" />One</label><label class=\"radio\" for=\"item_name_2\"><input id=\"item_name_2\" name=\"item[name]\" type=\"radio\" value=\"2\" />Two</label></div></div>"
         end
 
         it "allows custom label" do
-          @builder.radio_buttons(:name, {"One" => "1", "Two" => "2"}, {:label => "custom label"}).should match /custom label<\/label>/
+          @builder.radio_buttons(:name, @options, {:label => "custom label"}).should match /custom label<\/label>/
         end
       end
 
