@@ -4,7 +4,7 @@ module BootstrapForms
       private
       def control_group_div(&block)
         field_errors = error_string
-        if @field_options[:error] 
+        if @field_options[:error]
           (@field_options[:error] << ", " << field_errors) if field_errors
         else
           @field_options[:error] = field_errors
@@ -37,7 +37,7 @@ module BootstrapForms
       def input_div(&block)
         content_tag(:div, :class => 'controls') do
           if @field_options[:append] || @field_options[:prepend]
-            klass = [""]
+            klass = []
             klass << 'input-prepend' if @field_options[:prepend]
             klass << 'input-append' if @field_options[:append]
             content_tag(:div, :class => klass, &block)
@@ -48,8 +48,8 @@ module BootstrapForms
       end
 
       def label_field(&block)
-        if @field_options[:label] == ""
-          return "".html_safe
+        if @field_options[:label] == '' || @field_options[:label] == false
+          return ''.html_safe
         else
           if respond_to?(:object)
              label(@name, block_given? ? block : @field_options[:label], :class => ['control-label', required_class].compact.join(' '))
