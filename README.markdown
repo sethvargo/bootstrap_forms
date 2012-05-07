@@ -188,8 +188,9 @@ Contributing
 ------------
 I'm pretty dam active on github. Fork and submit a pull request. Most of my pull requests are merged the same day. Make sure you:
 
- - Squash into a single commit (unless it makes sense to have multiple commits)
- - Document your changes
+ - **Squash** into a single commit (unless it makes sense to have multiple commits)
+ - **Test/Spec** the changes
+ - **Document** your changes
 
 License
 -------
