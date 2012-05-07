@@ -1,5 +1,7 @@
 Bootstrap Forms
 ===============
+[![Build Status](https://secure.travis-ci.org/sethvargo/bootstrap_forms.png?branch=master)](http://travis-ci.org/sethvargo/bootstrap_forms)
+
 Bootstrap Forms is a nice Rails generator that makes working with [Bootstrap (by Twitter)](http://twitter.github.com/bootstrap) even easier on Rails. 
 
 Forms with Bootstrap are crowded with additional layout markup. While it's necessary, you shouldn't have to type it every time you create a form! That's why I created Bootstrap Forms.
