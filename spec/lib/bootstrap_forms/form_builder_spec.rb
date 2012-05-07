@@ -61,6 +61,14 @@ describe "BootstrapForms::FormBuilder" do
         it "allows custom label" do
           @builder.check_box("name", :label => "custom label").should match /custom label<\/label>/
         end
+        
+        it "allows no label with :label => false " do
+          @builder.check_box("name", :label => false).should_not match /<\/label>/
+        end
+        
+        it "allows no label with :label => '' " do
+          @builder.check_box("name", :label => '').should_not match /<\/label>/
+        end
       end
       
       describe "radio_buttons" do
@@ -143,6 +151,22 @@ describe "BootstrapForms::FormBuilder" do
         
         it "appends passed text" do
           @builder.text_field(:name, :append => '@').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-append\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"add-on\">@</span></div></div></div>"
+        end
+        
+        it "prepends and appends passed text" do
+          @builder.text_field(:name, :append => '@', :prepend => '#').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-prepend input-append\"><span class=\"add-on\">\#</span><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"add-on\">@</span></div></div></div>"
+        end
+      end
+       context "label option" do
+        %w(select email_field file_field number_field password_field search_field text_area text_field url_field).each do |method_name|
+
+          it "should not add a label when ''" do
+            @builder.send(method_name.to_sym, 'name', :label => '').should_not match /<\/label>/
+          end
+
+          it "should not add a label when false" do
+            @builder.send(method_name.to_sym, 'name', :label => false).should_not match /<\/label>/
+          end
         end
       end
     end # extras

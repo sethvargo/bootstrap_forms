@@ -37,7 +37,7 @@ module BootstrapForms
       def input_div(&block)
         content_tag(:div, :class => 'controls') do
           if @field_options[:append] || @field_options[:prepend]
-            klass = [""]
+            klass = []
             klass << 'input-prepend' if @field_options[:prepend]
             klass << 'input-append' if @field_options[:append]
             content_tag(:div, :class => klass, &block)
@@ -48,7 +48,7 @@ module BootstrapForms
       end
 
       def label_field(&block)
-        if @field_options[:label] == ""
+        if @field_options[:label] == "" || @field_options[:label] == false
           return "".html_safe
         else
           if respond_to?(:object)
