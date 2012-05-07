@@ -41,9 +41,12 @@ module BootstrapForms
       control_group_div do
         input_div do
 <<<<<<< HEAD
+<<<<<<< HEAD
           if @field_options[:label] == false || @field_options[:label] == ''
             extras { super(name, *(@args << @field_options)) }
 =======
+=======
+>>>>>>> parent of 93cc071... allow both false and empty string to not display a label
           if @field_options[:label] == ""
             extras { super(name, *(@args << @field_options)) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
 >>>>>>> parent of 93cc071... allow both false and empty string to not display a label
