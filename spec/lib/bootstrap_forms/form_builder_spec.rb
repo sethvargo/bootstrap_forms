@@ -53,6 +53,16 @@ describe "BootstrapForms::FormBuilder" do
         end
       end
 
+      describe "uneditable_input" do 
+        it "generates wrapped input" do
+          @builder.uneditable_input("name").should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><span class=\"uneditable-input\"></span></div></div>"
+        end
+
+        it "allows for an id" do
+          @builder.uneditable_input("name", :id => "myid").should match /<span.*id="myid"/
+        end
+      end
+
       describe "check_box" do
         it "generates wrapped input" do
           @builder.check_box("name").should == "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\" for=\"item_name\"><input name=\"item[name]\" type=\"hidden\" value=\"0\" /><input id=\"item_name\" name=\"item[name]\" type=\"checkbox\" value=\"1\" />Name</label></div></div>"
@@ -112,7 +122,7 @@ describe "BootstrapForms::FormBuilder" do
             end
 
             it "has an input of type: #{type}" do
-              @result.should match /<input.*type=["#{type}"]/
+              @result.should match /<input.*type="#{type}"/
             end
           end # result
 
