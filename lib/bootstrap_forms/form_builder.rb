@@ -119,7 +119,9 @@ module BootstrapForms
       control_group_div do
         label_field + input_div do
           extras do
-            content_tag(:span, :class => 'uneditable-input') do
+            options = { :class => 'uneditable-input' }
+            options[:id] = @field_options[:id] if @field_options[:id]
+            content_tag(:span, options) do 
               @field_options[:value] || object.send(@name.to_sym)
             end
           end
