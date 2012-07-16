@@ -20,7 +20,7 @@ module BootstrapForms
       end
 
       def error_string
-        if respond_to?(:object)
+        if respond_to?(:object) and object.respond_to?(:errors)
           errors = object.errors[@name]
           if errors.present?
             errors.map { |e|
@@ -31,7 +31,7 @@ module BootstrapForms
       end
 
       def human_attribute_name
-        object.class.human_attribute_name(@name)
+        object.class.human_attribute_name(@name) rescue @name.titleize
       end
 
       def input_div(&block)
@@ -61,7 +61,7 @@ module BootstrapForms
 
       def required_class
         return 'required' if @field_options[:required]
-        if respond_to?(:object)
+        if respond_to?(:object) and object.respond_to?(:errors)
           return 'required' if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
         end
         nil
