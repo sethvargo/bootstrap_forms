@@ -5,7 +5,6 @@ module BootstrapForms
     delegate :content_tag, :hidden_field_tag, :check_box_tag, :radio_button_tag, :button_tag, :link_to, :to => :@template
 
     def error_messages
-      # return nil if object.is_a?(Symbol)
       if object.try(:errors) and object.errors.full_messages.any?
         content_tag(:div, :class => 'alert alert-block alert-error validation-errors') do
           content_tag(:h4, I18n.t('bootstrap_forms.errors.header', :model => object.class.model_name.human), :class => 'alert-heading') +
