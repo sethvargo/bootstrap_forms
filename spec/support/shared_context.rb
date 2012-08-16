@@ -163,21 +163,32 @@ shared_examples "a bootstrap form" do
     end
 
     context "submit" do
-      it "adds btn primary class" do
+      it "adds btn primary class if no class is defined" do
         @builder.submit.should match /class=\"btn btn-primary\"/
+      end
+      it "allows for custom classes" do
+        @builder.submit(:class => 'btn btn-large btn-success').should match /class=\"btn btn-large btn-success\"/
       end
     end
 
     context "button" do
-      it "adds btn primary class" do
+      it "adds btn primary class if no class is defined" do
         @builder.button.should match /class=\"btn btn-primary\"/
+      end
+      it "allows for custom classes" do
+        @builder.button(:class => 'btn btn-large btn-success').should match /class=\"btn btn-large btn-success\"/
       end
     end
 
     context "cancel" do
-      it "creates link with correct class" do
+      it "creates a link with cancel btn class if no class is defined" do
         @builder.should_receive(:link_to).with(I18n.t('bootstrap_forms.buttons.cancel'), :back, :class => 'btn cancel').and_return("")
         @builder.cancel
+      end
+
+      it "creates a link with custom classes when defined" do
+        @builder.should_receive(:link_to).with(I18n.t('bootstrap_forms.buttons.cancel'), :back, :class => 'btn btn-large my-cancel').and_return("")
+        @builder.cancel(:class => 'btn btn-large my-cancel')
       end
     end
   end # actions
