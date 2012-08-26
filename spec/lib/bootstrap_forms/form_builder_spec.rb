@@ -96,3 +96,19 @@ describe "BootstrapForms::FormBuilder" do
     it_behaves_like 'a bootstrap form'
   end
 end
+
+describe 'BootstrapForms::Helpers::FormTagHelper' do
+  describe '#bootstrap_text_field_tag' do
+    context 'with no method "validators_on"' do
+      before(:each) do
+        @non_active_record_object = {:attributes => [:id, :name]}
+        @template = ActionView::Base.new
+        @template.output_buffer = ""
+        @builder = BootstrapForms::FormBuilder.new(:item, @non_active_record_object, @template, {}, proc {})
+      end
+      it 'returns an empty string with no errors' do
+        @template.bootstrap_text_field_tag(@builder.object[:name]).should == '<div class="control-group"><label class="control-label"></label><div class="controls"><input id="" type="text" value="error" /></div></div>'
+      end
+    end
+  end
+end
