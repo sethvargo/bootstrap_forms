@@ -61,7 +61,7 @@ module BootstrapForms
 
       def required_class
         return 'required' if @field_options[:required]
-        if respond_to?(:object) and object.respond_to?(:errors)
+        if respond_to?(:object) and object.respond_to?(:errors) and object.class.respond_to?('validators_on')
           return 'required' if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
         end
         nil
