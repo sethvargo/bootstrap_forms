@@ -5,4 +5,5 @@ pkg/*
 .DS_Store
 .rspec
 .rvmrc
+.project
 spec/dummy/log
