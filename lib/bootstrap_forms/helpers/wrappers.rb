@@ -14,9 +14,8 @@ module BootstrapForms
         klasses << 'error' if @field_options[:error]
         klasses << 'success' if @field_options[:success]
         klasses << 'warning' if @field_options[:warning]
-        klass = klasses.join(' ')
 
-        content_tag(:div, :class => klass, &block)
+        content_tag(:div, :class => klasses, &block)
       end
 
       def error_string
@@ -52,19 +51,18 @@ module BootstrapForms
           return ''.html_safe
         else
           if respond_to?(:object)
-             label(@name, block_given? ? block : @field_options[:label], :class => ['control-label', required_class].compact.join(' '))
+             label(@name, block_given? ? block : @field_options[:label], :class => 'control-label')
            else
-             label_tag(@name, block_given? ? block : @field_options[:label], :class => ['control-label', required_class].compact.join(' '))
+             label_tag(@name, block_given? ? block : @field_options[:label], :class => 'control-label')
            end
         end
       end
 
-      def required_class
-        return 'required' if @field_options[:required]
+      def required_attribute
         if respond_to?(:object) and object.respond_to?(:errors) and object.class.respond_to?('validators_on')
-          return 'required' if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
+          return { :required => true } if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
         end
-        nil
+        {}
       end
 
       %w(help_inline error success warning help_block append prepend).each do |method_name|

@@ -139,9 +139,10 @@ shared_examples "a bootstrap form" do
         @builder.text_field(:name, :append => '@', :prepend => '#').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-prepend input-append\"><span class=\"add-on\">\#</span><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"add-on\">@</span></div></div></div>"
       end
     end
-     context "label option" do
-      %w(select email_field file_field number_field password_field search_field text_area text_field url_field).each do |method_name|
 
+    context "label option" do
+      %w(select email_field file_field number_field password_field search_field text_area text_field url_field).each do |method_name|
+        
         it "should not add a label when ''" do
           @builder.send(method_name.to_sym, 'name', :label => '').should_not match /<\/label>/
         end
@@ -166,6 +167,7 @@ shared_examples "a bootstrap form" do
       it "adds btn primary class if no class is defined" do
         @builder.submit.should match /class=\"btn btn-primary\"/
       end
+
       it "allows for custom classes" do
         @builder.submit(:class => 'btn btn-large btn-success').should match /class=\"btn btn-large btn-success\"/
       end
@@ -175,6 +177,7 @@ shared_examples "a bootstrap form" do
       it "adds btn primary class if no class is defined" do
         @builder.button.should match /class=\"btn btn-primary\"/
       end
+
       it "allows for custom classes" do
         @builder.button(:class => 'btn btn-large btn-success').should match /class=\"btn btn-large btn-success\"/
       end
