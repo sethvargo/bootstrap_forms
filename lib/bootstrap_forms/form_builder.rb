@@ -78,8 +78,8 @@ module BootstrapForms
       control_group_div do
         label_field + extras do
           content_tag(:div, :class => 'controls') do
+            options = @field_options.merge(required_attribute)
             records.collect do |record|
-              options = @field_options.merge(required_attribute)
               options[:id] = "#{object_name}_#{attribute}_#{record.send(record_id)}"
               checkbox = check_box_tag("#{object_name}[#{attribute}][]", record.send(record_id), [object.send(attribute)].flatten.include?(record.send(record_id)), options)
 
@@ -100,8 +100,8 @@ module BootstrapForms
       control_group_div do
         label_field + extras do
           content_tag(:div, :class => 'controls') do
+            options = @field_options.merge(required_attribute)
             records.collect do |record|
-              options = @field_options.merge(required_attribute)
               options[:id] = "#{object_name}_#{attribute}_#{record.send(record_id)}"
               radiobutton = radio_button_tag("#{object_name}[#{attribute}]", record.send(record_id), object.send(attribute) == record.send(record_id), options)
 
