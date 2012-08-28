@@ -73,6 +73,12 @@ describe "BootstrapForms::FormBuilder" do
       end
     end
 
+    context "an attribute with a PresenceValidator" do
+      it "adds the required attribute" do 
+        @builder.text_field("owner").should match /<input .*required="required"/
+      end
+    end
+
     context 'submit' do
       it 'checks persistence of object' do
         @builder.submit.should match('Create Project')

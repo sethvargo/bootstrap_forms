@@ -27,7 +27,7 @@ module BootstrapForms
 
         control_group_div do
           label_field + input_div do
-            extras { super(name, *(@args << @field_options)) }
+            extras { super(name, *(@args << @field_options.merge(required_attribute))) }
           end
         end
       end
@@ -40,10 +40,11 @@ module BootstrapForms
 
       control_group_div do
         input_div do
+          @field_options.merge!(required_attribute)
           if @field_options[:label] == false || @field_options[:label] == ''
             extras { super(name, *(@args << @field_options)) }
           else
-            label(@name, :class => [ 'checkbox', required_class ].compact.join(' ')) do
+            label(@name, :class => 'checkbox') do
               extras { super(name, *(@args << @field_options)) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
             end
           end
@@ -53,14 +54,14 @@ module BootstrapForms
 
     def radio_buttons(name, values = {}, opts = {})
       @name = name
-      @field_options = opts
+      @field_options = opts.merge(required_attribute)
       control_group_div do
         label_field + input_div do
-          values.map do |text, value|
+          values.map do |text, value|            
             if @field_options[:label] == '' || @field_options[:label] == false
               extras { radio_button(name, value, @field_options) + text }
             else
-              label("#{@name}_#{value}", :class => [ 'radio', required_class ].compact.join(' ')) do
+              label("#{@name}_#{value}", :class => 'radio') do
                 extras { radio_button(name, value, @field_options) + text }
               end
             end
@@ -78,10 +79,11 @@ module BootstrapForms
         label_field + extras do
           content_tag(:div, :class => 'controls') do
             records.collect do |record|
-              element_id = "#{object_name}_#{attribute}_#{record.send(record_id)}"
-              checkbox = check_box_tag("#{object_name}[#{attribute}][]", record.send(record_id), [object.send(attribute)].flatten.include?(record.send(record_id)), @field_options.merge({:id => element_id}))
+              options = @field_options.merge(required_attribute)
+              options[:id] = "#{object_name}_#{attribute}_#{record.send(record_id)}"
+              checkbox = check_box_tag("#{object_name}[#{attribute}][]", record.send(record_id), [object.send(attribute)].flatten.include?(record.send(record_id)), options)
 
-              content_tag(:label, :class => ['checkbox', ('inline' if @field_options[:inline])].compact.join(' ')) do
+              content_tag(:label, :class => ['checkbox', ('inline' if @field_options[:inline])].compact) do
                 checkbox + content_tag(:span, record.send(record_name))
               end
             end.join('').html_safe
@@ -99,10 +101,11 @@ module BootstrapForms
         label_field + extras do
           content_tag(:div, :class => 'controls') do
             records.collect do |record|
-              element_id = "#{object_name}_#{attribute}_#{record.send(record_id)}"
-              radiobutton = radio_button_tag("#{object_name}[#{attribute}]", record.send(record_id), object.send(attribute) == record.send(record_id), @field_options.merge({:id => element_id}))
+              options = @field_options.merge(required_attribute)
+              options[:id] = "#{object_name}_#{attribute}_#{record.send(record_id)}"
+              radiobutton = radio_button_tag("#{object_name}[#{attribute}]", record.send(record_id), object.send(attribute) == record.send(record_id), options)
 
-              content_tag(:label, :class => ['radio', ('inline' if @field_options[:inline])].compact.join(' ')) do
+              content_tag(:label, :class => ['radio', ('inline' if @field_options[:inline])].compact) do
                 radiobutton + content_tag(:span, record.send(record_name))
               end
             end.join('').html_safe
@@ -119,10 +122,11 @@ module BootstrapForms
       control_group_div do
         label_field + input_div do
           extras do
-            options = { :class => 'uneditable-input' }
-            options[:id] = @field_options[:id] if @field_options[:id]
-            content_tag(:span, options) do
-              @field_options[:value] || object.send(@name.to_sym) rescue nil
+            value = @field_options.delete(:value)
+            @field_options[:class] = [@field_options[:class], 'uneditable-input'].compact
+
+            content_tag(:span, @field_options) do 
+              value || object.send(@name.to_sym) rescue nil
             end
           end
         end
