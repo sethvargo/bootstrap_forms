@@ -2,6 +2,8 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+require 'bundler'
+Bundler.setup
 Bundler.require
 require "bootstrap_forms"
 
