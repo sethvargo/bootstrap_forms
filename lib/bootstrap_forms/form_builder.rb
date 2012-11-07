@@ -22,7 +22,7 @@ module BootstrapForms
     %w(collection_select select country_select time_zone_select email_field file_field number_field password_field phone_field range_field search_field telephone_field text_area text_field url_field datetime_select date_select time_select).each do |method_name|
       define_method(method_name) do |name, *args|
         @name = name
-        @field_options = @options.merge(args.extract_options!)
+        @field_options = field_options(args)
         @args = args
 
         control_group_div do
@@ -35,7 +35,7 @@ module BootstrapForms
 
     def check_box(name, *args)
       @name = name
-      @field_options = @options.merge(args.extract_options!)
+      @field_options = field_options(args)
       @args = args
 
       control_group_div do
@@ -54,7 +54,7 @@ module BootstrapForms
 
     def radio_buttons(name, values = {}, opts = {})
       @name = name
-      @field_options = @options.merge(opts.merge(required_attribute))
+      @field_options = @options.slice(:namespace, :index).merge(opts.merge(required_attribute))
       control_group_div do
         label_field + input_div do
           values.map do |text, value|
@@ -72,7 +72,7 @@ module BootstrapForms
 
     def collection_check_boxes(attribute, records, record_id, record_name, *args)
       @name = attribute
-      @field_options = @options.merge(args.extract_options!)
+      @field_options = field_options(args)
       @args = args
 
       control_group_div do
@@ -94,7 +94,7 @@ module BootstrapForms
 
     def collection_radio_buttons(attribute, records, record_id, record_name, *args)
       @name = attribute
-      @field_options = @options.merge(args.extract_options!)
+      @field_options = field_options(args)
       @args = args
 
       control_group_div do
@@ -116,7 +116,7 @@ module BootstrapForms
 
     def uneditable_input(name, *args)
       @name = name
-      @field_options = @options.merge(args.extract_options!)
+      @field_options = field_options(args)
       @args = args
 
       control_group_div do
@@ -135,7 +135,7 @@ module BootstrapForms
 
     def button(name = nil, *args)
       @name = name
-      @field_options = @options.merge(args.extract_options!)
+      @field_options = field_options(args)
       @args = args
 
       @field_options[:class] ||= 'btn btn-primary'
@@ -144,7 +144,7 @@ module BootstrapForms
 
     def submit(name = nil, *args)
       @name = name
-      @field_options = @options.merge(args.extract_options!)
+      @field_options = field_options(args)
       @args = args
 
       @field_options[:class] ||= 'btn btn-primary'
@@ -152,7 +152,7 @@ module BootstrapForms
     end
 
     def cancel(*args)
-      @field_options = @options.merge(args.extract_options!)
+      @field_options = field_options(args)
       @field_options[:class] ||= 'btn cancel'
       link_to(I18n.t('bootstrap_forms.buttons.cancel'), (@field_options[:back] || :back), :class => @field_options[:class])
     end
@@ -164,6 +164,15 @@ module BootstrapForms
         else
           [submit, cancel].join(' ').html_safe
         end
+      end
+    end
+
+    private
+    def field_options(args)
+      if @options
+        @options.slice(:namespace, :index).merge(args.extract_options!)
+      else
+        args.extract_options!
       end
     end
   end

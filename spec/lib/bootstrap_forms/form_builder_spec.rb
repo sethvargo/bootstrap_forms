@@ -9,14 +9,16 @@ describe 'BootstrapForms::FormBuilder' do
       @builder = BootstrapForms::FormBuilder.new(:item, @project, @template, {}, proc {})
     end
 
-    it_behaves_like 'a bootstrap form'
+    context 'with no options' do
+      it_behaves_like 'a bootstrap form'
+    end
 
     context 'with the :namespace option' do
       before(:each) do
         @builder.options[:namespace] = 'foo'
       end
 
-      it 'prefix HTML ids correctly' do
+      it 'prefixs HTML ids correctly' do
         @builder.text_field('name').should match /<(input) .*id="foo_item_name"/
       end
     end
@@ -26,11 +28,14 @@ describe 'BootstrapForms::FormBuilder' do
         @builder.options[:index] = 69
       end
 
-      it 'use the correct :index' do
+      it 'uses the correct :index' do
         @builder.text_field('name').should match /<input .*id="item_69_name"/
       end
-    end
 
+      it 'does not add extraneous input data' do
+        @builder.text_field('name').should_not match /<input .*index/
+      end
+    end
 
     context 'with the :namespace and :index options' do
       before(:each) do
@@ -38,18 +43,28 @@ describe 'BootstrapForms::FormBuilder' do
         @builder.options[:index] = 69
       end
 
-      it 'use the correct :index' do
+      it 'uses the correct :index' do
         @builder.text_field('name').should match /<input .*id="foo_item_69_name"/
       end
     end
 
+    context 'with :html options' do
+      before(:each) do
+        @builder.options[:html] = { :class => 'foo' }
+      end
+
+      it 'does not add the class to the elements' do
+        @builder.text_field('name').should_not match /<input .*class="foo"/
+      end
+    end
+
     context 'without errors' do
-      it 'return empty string' do
+      it 'returns empty string' do
         @builder.error_messages.should be_empty
       end
     end
 
-    context 'with errors' do
+    context 'errors' do
       before(:each) do
         @project.errors.add('name')
         @result = @builder.error_messages
@@ -95,7 +110,7 @@ describe 'BootstrapForms::FormBuilder' do
     end
   end
 
-  context 'given a setup builder with a symbol' do
+  context 'setup builder with a symbol' do
     before(:each) do
       @template = ActionView::Base.new
       @template.output_buffer = ''
@@ -115,6 +130,7 @@ describe 'BootstrapForms::Helpers::FormTagHelper' do
         @template.output_buffer = ""
         @builder = BootstrapForms::FormBuilder.new(:item, @non_active_record_object, @template, {}, proc {})
       end
+
       it 'returns an empty string with no errors' do
         @template.bootstrap_text_field_tag(@builder.object[:name]).should match /<div class="control-group">.*/
       end
