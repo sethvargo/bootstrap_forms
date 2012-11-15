@@ -58,12 +58,8 @@ module BootstrapForms
       control_group_div do
         label_field + input_div do
           values.map do |text, value|
-            if @field_options[:label] == '' || @field_options[:label] == false
+            label("#{@name}_#{value}", :class => 'radio') do
               extras { radio_button(name, value, @field_options) + text }
-            else
-              label("#{@name}_#{value}", :class => 'radio') do
-                extras { radio_button(name, value, @field_options) + text }
-              end
             end
           end.join.html_safe
         end
