@@ -166,6 +166,11 @@ You can add as many options to any form helper tag. If they are interpreted by B
     <td>Adds special text at the end of the input</td>
     <td>= f.text_field :name, :append => '@'</td>
   </tr>
+  <tr>
+    <th>label</th>
+    <td>Customize the field's label. Pass false to have no label.</td>
+    <td>= f.text_field :name, :label => 'Other name'</td>
+  </tr>
 </table>
 
 Internationalization/Custom Errors
