@@ -2,13 +2,13 @@ Bootstrap Forms
 ===============
 [![Build Status](https://secure.travis-ci.org/sethvargo/bootstrap_forms.png?branch=master)](http://travis-ci.org/sethvargo/bootstrap_forms)
 
-Bootstrap Forms is a nice Rails generator that makes working with [Bootstrap (by Twitter)](http://twitter.github.com/bootstrap) even easier on Rails. 
+Bootstrap Forms is a nice Rails generator that makes working with [Bootstrap (by Twitter)](http://twitter.github.com/bootstrap) even easier on Rails.
 
 Forms with Bootstrap are crowded with additional layout markup. While it's necessary, you shouldn't have to type it every time you create a form! That's why I created Bootstrap Forms.
 
 Bootstrap 2.0 Compliant!
 ------------------------
-A super special thanks to [vincenzor](https://github.com/vincenzor) for updating `bootstrap_forms` to comply with the new methods and features in Twitter Bootstrap 2.0. 
+A super special thanks to [vincenzor](https://github.com/vincenzor) for updating `bootstrap_forms` to comply with the new methods and features in Twitter Bootstrap 2.0.
 
 To get these new features, ensure you are using `bootstrap_forms ~> 2.0.0`.
 
@@ -105,7 +105,7 @@ Bootstrap Forms also adds a default actions panel when you call `f.submit`:
 ```haml
 = f.submit
 ```
-    
+
 generates:
 
 ```html
@@ -134,42 +134,42 @@ You can add as many options to any form helper tag. If they are interpreted by B
   <tr>
     <th>help_inline</th>
     <td>Add inline help text</td>
-    <td>= f.text_field :name, :help_inline => 'help me!'</td>
+    <td><tt>= f.text_field :name, :help_inline => 'help me!'</td></td>
   </tr>
   <tr>
     <th>help_block</th>
     <td>Add block help text (below)</td>
-    <td>= f.text_field :name, :help_block => 'help me!'</td>
+    <td><tt>= f.text_field :name, :help_block => 'help me!'</td></td>
   </tr>
   <tr>
     <th>error</th>
     <td>Styles the field as error (red)</td>
-    <td>= f.text_field :name, :error => 'This is an error!'</td>
+    <td><tt>= f.text_field :name, :error => 'This is an error!'</td></td>
   </tr>
   <tr>
     <th>success</th>
     <td>Styles the field as success (green)</td>
-    <td>= f.text_field :name, :success => 'This checked out OK'</td>
+    <td><tt>= f.text_field :name, :success => 'This checked out OK'</td></td>
   </tr>
   <tr>
     <th>warning</th>
     <td>Styles the field as warning (yellow)</td>
-    <td>= f.text_field :name, :warning => 'Take a look at this...'</td>
+    <td><tt>= f.text_field :name, :warning => 'Take a look at this...'</td></td>
   </tr>
   <tr>
     <th>prepend</th>
     <td>Adds special text to the front of the input</td>
-    <td>= f.text_field :name, :prepend => '@'</td>
+    <td><tt>= f.text_field :name, :prepend => '@'</td></td>
   </tr>
   <tr>
     <th>append</th>
     <td>Adds special text at the end of the input</td>
-    <td>= f.text_field :name, :append => '@'</td>
+    <td><tt>= f.text_field :name, :append => '@'</td></td>
   </tr>
   <tr>
     <th>label</th>
     <td>Customize the field's label. Pass false to have no label.</td>
-    <td>= f.text_field :name, :label => 'Other name'</td>
+    <td><tt>= f.text_field :name, :label => 'Other name'</td></td>
   </tr>
 </table>
 
