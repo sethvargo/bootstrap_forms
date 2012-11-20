@@ -142,6 +142,22 @@ shared_examples 'a bootstrap form' do
       it 'prepends and appends passed text' do
         @builder.text_field(:name, :append => '@', :prepend => '#').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-prepend input-append\"><span class=\"add-on\">\#</span><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"add-on\">@</span></div></div></div>"
       end
+      
+      it 'appends button with default values' do
+        @builder.text_field(:name, :append_button => { :label => 'button label' }).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-append\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><button class=\"btn\" type=\"button\">button label</button></div></div></div>"
+      end
+      
+      it 'appends button and overrides class and type' do
+        @builder.text_field(:name, :append_button => { :label => 'Danger!', :class => 'btn btn-danger', :type => 'submit' }).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-append\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><button class=\"btn btn-danger\" type=\"submit\">Danger!</button></div></div></div>"
+      end
+      
+      it 'appends button with custom attributes' do
+        @builder.text_field(:name, :append_button => { :label => 'button label', :data => { :custom_1 => 'value 1', :custom_2 => 'value 2' } }).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-append\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><button class=\"btn\" data-custom-1=\"value 1\" data-custom-2=\"value 2\" type=\"button\">button label</button></div></div></div>"
+      end
+      
+      it 'appends button with an icon' do
+        @builder.text_field(:name, :append_button => { :label => 'button label', :icon => 'icon-plus icon-white' }).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-append\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><button class=\"btn\" type=\"button\"><i class=\"icon-plus icon-white\"></i> button label</button></div></div></div>"
+      end
     end
 
     context 'label option' do
