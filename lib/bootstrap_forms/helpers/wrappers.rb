@@ -35,10 +35,10 @@ module BootstrapForms
 
       def input_div(&block)
         content_tag(:div, :class => 'controls') do
-          if @field_options[:append] || @field_options[:prepend]
+          if @field_options[:append] || @field_options[:prepend] || @field_options[:append_button]
             klass = []
             klass << 'input-prepend' if @field_options[:prepend]
-            klass << 'input-append' if @field_options[:append]
+            klass << 'input-append' if @field_options[:append] || @field_options[:append_button]
             content_tag(:div, :class => klass, &block)
           else
             yield if block_given?
@@ -65,30 +65,49 @@ module BootstrapForms
         {}
       end
 
-      %w(help_inline error success warning help_block append prepend).each do |method_name|
+      %w(help_inline error success warning help_block append append_button prepend).each do |method_name|
         define_method(method_name) do |*args|
           return '' unless value = @field_options[method_name.to_sym]
+          
+          escape = true
+          tag_options = {}
           case method_name
           when 'help_block'
             element = :p
-            klass = 'help-block'
+            tag_options[:class] = 'help-block'
           when 'append', 'prepend'
             element = :span
-            klass = 'add-on'
+            tag_options[:class] = 'add-on'
+          when 'append_button'
+            element = :button
+            button_options = value
+            value = ''
+            
+            if button_options.has_key? :icon
+              value << content_tag(:i, '', { :class => button_options.delete(:icon) })
+              value << ' '
+              escape = false
+            end
+            
+            value << button_options.delete(:label)
+            
+            tag_options[:type] = 'button'
+            tag_options[:class] = 'btn'
+            tag_options.merge! button_options
           else
             element = :span
-            klass = 'help-inline'
+            tag_options[:class] = 'help-inline'
           end
-          content_tag(element, value, :class => klass)
+          content_tag(element, value, tag_options, escape)
         end
       end
 
       def extras(&block)
-        [prepend, (yield if block_given?), append, help_inline, error, success, warning, help_block].join('').html_safe
+        [prepend, (yield if block_given?), append, append_button, help_inline, error, success, warning, help_block].join('').html_safe
       end
 
       def objectify_options(options)
-        super.except(:label, :help_inline, :error, :success, :warning, :help_block, :prepend, :append)
+        super.except(:label, :help_inline, :error, :success, :warning, :help_block, :prepend, :append, :append_button)
       end
     end
   end

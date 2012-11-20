@@ -167,6 +167,18 @@ You can add as many options to any form helper tag. If they are interpreted by B
     <td><tt>= f.text_field :name, :append => '@'</td></td>
   </tr>
   <tr>
+    <th>append_button</th>
+    <td>
+      Adds the given button to the end of the input. The value is a hash.<br/>
+      :label is the button label<br/>
+      :icon adds an icon before the label<br/>
+      :class has a default value of 'btn'<br/>
+      :type has a default value of 'button'<br/>
+      Any other entries are passed directly to Rails's tag helper.
+    </td>
+    <td><tt>= f.text_field :name, :append_button => { :label => 'Button label', :icon => 'icon-plus', :type => 'button' }</td></td>
+  </tr>
+  <tr>
     <th>label</th>
     <td>Customize the field's label. Pass false to have no label.</td>
     <td><tt>= f.text_field :name, :label => 'Other name'</td></td>
