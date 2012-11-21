@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rspec-rails', '~> 2.12.0'
   s.add_development_dependency 'capybara', '~> 2.0.0'
+  s.add_development_dependency 'nokogiri'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rails', '~> 3.2.0'
   s.add_development_dependency 'guard-rspec'
