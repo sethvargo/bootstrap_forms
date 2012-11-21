@@ -15,7 +15,7 @@ module BootstrapForms
         klasses << 'error' if @field_options[:error]
         klasses << 'success' if @field_options[:success]
         klasses << 'warning' if @field_options[:warning]
-        
+
         control_group_options = {}
         control_group_options[:class] = klasses if !klasses.empty?
 
@@ -39,7 +39,7 @@ module BootstrapForms
 
       def input_div(&block)
         content_options = {}
-        content_options[:class] = 'controls' 
+        content_options[:class] = 'controls'
         if @field_options[:control_group] == false
           @field_options.delete :control_group
           write_input_div(&block)
@@ -49,7 +49,7 @@ module BootstrapForms
           end
         end
       end
-      
+
       def write_input_div(&block)
         if @field_options[:append] || @field_options[:prepend] || @field_options[:append_button]
           klass = []
@@ -85,7 +85,7 @@ module BootstrapForms
       %w(help_inline error success warning help_block append append_button prepend).each do |method_name|
         define_method(method_name) do |*args|
           return '' unless value = @field_options[method_name.to_sym]
-          
+
           escape = true
           tag_options = {}
           case method_name
@@ -99,15 +99,15 @@ module BootstrapForms
             element = :button
             button_options = value
             value = ''
-            
+
             if button_options.has_key? :icon
               value << content_tag(:i, '', { :class => button_options.delete(:icon) })
               value << ' '
               escape = false
             end
-            
+
             value << button_options.delete(:label)
-            
+
             tag_options[:type] = 'button'
             tag_options[:class] = 'btn'
             tag_options.merge! button_options
