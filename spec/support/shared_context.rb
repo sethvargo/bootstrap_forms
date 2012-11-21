@@ -158,6 +158,14 @@ shared_examples 'a bootstrap form' do
       it 'appends button with an icon' do
         @builder.text_field(:name, :append_button => { :label => 'button label', :icon => 'icon-plus icon-white' }).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-append\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><button class=\"btn\" type=\"button\"><i class=\"icon-plus icon-white\"></i> button label</button></div></div></div>"
       end
+
+      it "does not add control group" do
+        @builder.text_field(:name, :control_group => false).should == "<div><label for=\"item_name\">Name</label><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /></div>"
+      end
+
+      it "does not add control group attribute to html if :control_group is true" do
+        @builder.text_field(:name, :control_group => true).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /></div></div>"
+      end
     end
 
     context 'label option' do

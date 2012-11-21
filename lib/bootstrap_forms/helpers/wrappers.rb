@@ -10,12 +10,16 @@ module BootstrapForms
           @field_options[:error] = field_errors
         end
 
-        klasses = ['control-group']
+        klasses = []
+        klasses << 'control-group' unless @field_options[:control_group] == false
         klasses << 'error' if @field_options[:error]
         klasses << 'success' if @field_options[:success]
         klasses << 'warning' if @field_options[:warning]
+        
+        control_group_options = {}
+        control_group_options[:class] = klasses if !klasses.empty?
 
-        content_tag(:div, :class => klasses, &block)
+        content_tag(:div, control_group_options, &block)
       end
 
       def error_string
@@ -34,15 +38,26 @@ module BootstrapForms
       end
 
       def input_div(&block)
-        content_tag(:div, :class => 'controls') do
-          if @field_options[:append] || @field_options[:prepend] || @field_options[:append_button]
-            klass = []
-            klass << 'input-prepend' if @field_options[:prepend]
-            klass << 'input-append' if @field_options[:append] || @field_options[:append_button]
-            content_tag(:div, :class => klass, &block)
-          else
-            yield if block_given?
+        content_options = {}
+        content_options[:class] = 'controls' 
+        if @field_options[:control_group] == false
+          @field_options.delete :control_group
+          write_input_div(&block)
+        else
+          content_tag(:div, :class => 'controls') do
+            write_input_div(&block)
           end
+        end
+      end
+      
+      def write_input_div(&block)
+        if @field_options[:append] || @field_options[:prepend] || @field_options[:append_button]
+          klass = []
+          klass << 'input-prepend' if @field_options[:prepend]
+          klass << 'input-append' if @field_options[:append] || @field_options[:append_button]
+          content_tag(:div, :class => klass, &block)
+        else
+          yield if block_given?
         end
       end
 
@@ -50,10 +65,12 @@ module BootstrapForms
         if @field_options[:label] == '' || @field_options[:label] == false
           return ''.html_safe
         else
+          label_options = {}
+          label_options[:class] = 'control-label' unless @field_options[:control_group] == false
           if respond_to?(:object)
-             label(@name, block_given? ? block : @field_options[:label], :class => 'control-label')
+             label(@name, block_given? ? block : @field_options[:label], label_options)
            else
-             label_tag(@name, block_given? ? block : @field_options[:label], :class => 'control-label')
+             label_tag(@name, block_given? ? block : @field_options[:label], label_options)
            end
         end
       end
@@ -107,7 +124,7 @@ module BootstrapForms
       end
 
       def objectify_options(options)
-        super.except(:label, :help_inline, :error, :success, :warning, :help_block, :prepend, :append, :append_button)
+        super.except(:label, :help_inline, :error, :success, :warning, :help_block, :prepend, :append, :append_button, :control_group)
       end
     end
   end
