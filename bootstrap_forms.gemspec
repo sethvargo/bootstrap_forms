@@ -3,7 +3,7 @@ $:.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'bootstrap_forms'
-  s.version     = '2.0.7'
+  s.version     = '2.0.8'
   s.author      = 'Seth Vargo'
   s.email       = 'sethvargo@gmail.com'
   s.homepage    = 'https://github.com/sethvargo/bootstrap_forms'
@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rspec-rails', '~> 2.12.0'
   s.add_development_dependency 'capybara', '~> 2.0.0'
-  s.add_development_dependency 'nokogiri'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rails', '~> 3.2.0'
   s.add_development_dependency 'guard-rspec'

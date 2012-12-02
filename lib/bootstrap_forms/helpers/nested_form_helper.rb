@@ -18,4 +18,13 @@ begin
     end
   end
 rescue LoadError => e
+  module BootstrapForms
+    module Helpers
+      module NestedFormHelper
+        def bootstrap_nested_form_for(*args, &block)
+          raise 'nested_form was not found. Is it in your Gemfile?'
+        end
+      end
+    end
+  end
 end
