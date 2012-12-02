@@ -206,6 +206,15 @@ en:
 
 Obviously you can also change to a different `lang.yml` file and use the same syntax.
 
+Nested Forms
+------------
+Bootstrap Forms works with [Ryan Bates' nested_form](https://github.com/ryanb/nested_form) out of the box. Just add `nested_form` to you Gemfile and `bootstrap_forms` will automatically add a builder for you:
+
+```haml
+= bootstrap_nested_form_for @model do |f|
+
+```
+
 Contributing
 ------------
 I'm pretty dam active on github. Fork and submit a pull request. Most of my pull requests are merged the same day. Make sure you:
