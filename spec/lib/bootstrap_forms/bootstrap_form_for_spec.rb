@@ -22,7 +22,7 @@ describe 'bootstrap_form_for' do
 			describe 'projects/new.html.erb', :type => :view do
 				before do
 					assign :project, Project.new
-					render :file => 'projects/new.html.erb', :layout => 'layouts/application.html.erb'
+					render :file => 'projects/new', :layout => 'layouts/application', :handlers => [:erb]
 				end
 
 				it 'should render with the other form builder' do
