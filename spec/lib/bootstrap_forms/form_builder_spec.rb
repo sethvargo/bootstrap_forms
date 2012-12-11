@@ -92,14 +92,6 @@ describe 'BootstrapForms::FormBuilder' do
     end
 
     context 'an attribute with a PresenceValidator' do
-      
-      before(:each) do
-        @project = Project.new
-        @template = ActionView::Base.new
-        @template.output_buffer =''
-        @builder = BootstrapForms::FormBuilder.new(:item, @project, @template, {}, proc {})
-      end
-      
       it 'adds the required attribute' do
         @builder.text_field('owner').should match /<input .*required="required"/
       end
