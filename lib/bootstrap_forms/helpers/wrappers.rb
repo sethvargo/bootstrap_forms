@@ -77,10 +77,31 @@ module BootstrapForms
 
       def required_attribute
         if respond_to?(:object) and object.respond_to?(:errors) and object.class.respond_to?('validators_on')
-          return { :required => true } if object.class.validators_on(@name).any? { |v| v.kind_of? ActiveModel::Validations::PresenceValidator }
+          return { :required => true } if object.class.validators_on(@name).any? { |v| v.kind_of?( ActiveModel::Validations::PresenceValidator ) && valid_validator?( v ) }
         end
         {}
       end
+      
+      def valid_validator?(validator)
+        !conditional_validators?(validator) && action_validator_match?(validator)
+      end
+      
+      def conditional_validators?(validator)
+        validator.options.include?(:if) || validator.options.include?(:unless)
+      end
+      
+      def action_validator_match?(validator)
+        return true if !validator.options.include?(:on)
+        case validator.options[:on]
+        when :save
+          true
+        when :create
+          !object.persisted?
+        when :update
+          object.persisted?
+        end
+      end
+      
 
       %w(help_inline error success warning help_block append append_button prepend).each do |method_name|
         define_method(method_name) do |*args|

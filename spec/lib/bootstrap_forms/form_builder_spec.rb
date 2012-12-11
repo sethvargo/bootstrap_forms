@@ -92,9 +92,41 @@ describe 'BootstrapForms::FormBuilder' do
     end
 
     context 'an attribute with a PresenceValidator' do
+      
+      before(:each) do
+        @project = Project.new
+        @template = ActionView::Base.new
+        @template.output_buffer =''
+        @builder = BootstrapForms::FormBuilder.new(:item, @project, @template, {}, proc {})
+      end
+      
       it 'adds the required attribute' do
         @builder.text_field('owner').should match /<input .*required="required"/
       end
+      
+      it "not require if or unless validators" do
+        @builder.text_field('if_presence').should_not match /<input .*required="required"/
+        @builder.text_field('unless_presence').should_not match /<input .*required="required"/
+      end
+      
+      it "should not be required if presence is on update and model is created" do
+        @builder.text_field('update_presence').should_not match /<input .*required="required"/
+      end
+      
+      it "should be required if on create and model is new" do
+        @builder.text_field('create_presence').should match /<input .*required="required"/
+      end
+      
+      it "should be required if presence is on update and model is not new" do
+        @project.stub!(:persisted?).and_return(true)
+        @builder.text_field('update_presence').should match /<input .*required="required"/
+      end
+      
+      it "should not be required if on create and model is not new" do
+        @project.stub!(:persisted?).and_return(true)
+        @builder.text_field('create_presence').should_not match /<input .*required="required"/
+      end
+      
     end
 
     context 'submit' do
