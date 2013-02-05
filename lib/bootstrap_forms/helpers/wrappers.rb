@@ -81,15 +81,15 @@ module BootstrapForms
         end
         {}
       end
-      
+
       def valid_validator?(validator)
         !conditional_validators?(validator) && action_validator_match?(validator)
       end
-      
+
       def conditional_validators?(validator)
         validator.options.include?(:if) || validator.options.include?(:unless)
       end
-      
+
       def action_validator_match?(validator)
         return true if !validator.options.include?(:on)
         case validator.options[:on]
@@ -101,7 +101,7 @@ module BootstrapForms
           object.persisted?
         end
       end
-      
+
 
       %w(help_inline error success warning help_block append append_button prepend).each do |method_name|
         define_method(method_name) do |*args|
@@ -111,7 +111,7 @@ module BootstrapForms
           tag_options = {}
           case method_name
           when 'help_block'
-            element = :p
+            element = :span
             tag_options[:class] = 'help-block'
           when 'append', 'prepend'
             element = :span
