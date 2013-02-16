@@ -116,7 +116,7 @@ shared_examples 'a bootstrap form' do
       end
 
       it 'adds help block' do
-        @builder.text_field(:name, :help_block => 'help me!').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><p class=\"help-block\">help me!</p></div></div>"
+        @builder.text_field(:name, :help_block => 'help me!').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-block\">help me!</span></div></div>"
       end
 
       it 'adds error message and class' do
@@ -202,8 +202,8 @@ shared_examples 'a bootstrap form' do
     end
 
     context 'button' do
-      it 'adds btn primary class if no class is defined' do
-        @builder.button.should match /class=\"btn btn-primary\"/
+      it 'adds btn class if no class is defined' do
+        @builder.button.should match /class=\"btn\"/
       end
 
       it 'allows for custom classes' do
@@ -220,6 +220,12 @@ shared_examples 'a bootstrap form' do
       it 'creates a link with custom classes when defined' do
         @builder.should_receive(:link_to).with(I18n.t('bootstrap_forms.buttons.cancel'), :back, :class => 'btn btn-large my-cancel').and_return("")
         @builder.cancel(:class => 'btn btn-large my-cancel')
+      end
+
+      it 'creates a link with a custom name when defined' do
+        name = 'Back'
+        @builder.should_receive(:link_to).with(name, :back, :class => 'btn cancel').and_return("")
+        @builder.cancel(:name => name)
       end
     end
   end # actions

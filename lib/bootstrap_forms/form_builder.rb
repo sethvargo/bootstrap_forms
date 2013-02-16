@@ -134,7 +134,7 @@ module BootstrapForms
       @field_options = field_options(args)
       @args = args
 
-      @field_options[:class] ||= 'btn btn-primary'
+      @field_options[:class] ||= 'btn'
       super(name, *(args << @field_options))
     end
 
@@ -150,7 +150,9 @@ module BootstrapForms
     def cancel(*args)
       @field_options = field_options(args)
       @field_options[:class] ||= 'btn cancel'
-      link_to(I18n.t('bootstrap_forms.buttons.cancel'), (@field_options[:back] || :back), :class => @field_options[:class])
+      @field_options[:name] ||= I18n.t('bootstrap_forms.buttons.cancel')
+      @field_options[:back] ||= :back
+      link_to(@field_options[:name], @field_options[:back], :class => @field_options[:class])
     end
 
     def actions(&block)
