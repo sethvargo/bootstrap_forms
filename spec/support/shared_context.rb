@@ -202,8 +202,8 @@ shared_examples 'a bootstrap form' do
     end
 
     context 'button' do
-      it 'adds btn primary class if no class is defined' do
-        @builder.button.should match /class=\"btn btn-primary\"/
+      it 'adds btn class if no class is defined' do
+        @builder.button.should match /class=\"btn\"/
       end
 
       it 'allows for custom classes' do

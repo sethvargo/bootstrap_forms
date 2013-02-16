@@ -134,7 +134,7 @@ module BootstrapForms
       @field_options = field_options(args)
       @args = args
 
-      @field_options[:class] ||= 'btn btn-primary'
+      @field_options[:class] ||= 'btn'
       super(name, *(args << @field_options))
     end
 
