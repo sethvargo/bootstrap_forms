@@ -116,7 +116,7 @@ shared_examples 'a bootstrap form' do
       end
 
       it 'adds help block' do
-        @builder.text_field(:name, :help_block => 'help me!').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><p class=\"help-block\">help me!</p></div></div>"
+        @builder.text_field(:name, :help_block => 'help me!').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-block\">help me!</span></div></div>"
       end
 
       it 'adds error message and class' do
