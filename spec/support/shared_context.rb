@@ -221,6 +221,12 @@ shared_examples 'a bootstrap form' do
         @builder.should_receive(:link_to).with(I18n.t('bootstrap_forms.buttons.cancel'), :back, :class => 'btn btn-large my-cancel').and_return("")
         @builder.cancel(:class => 'btn btn-large my-cancel')
       end
+
+      it 'creates a link with a custom name when defined' do
+        name = 'Back'
+        @builder.should_receive(:link_to).with(name, :back, :class => 'btn cancel').and_return("")
+        @builder.cancel(:name => name)
+      end
     end
   end # actions
 end
