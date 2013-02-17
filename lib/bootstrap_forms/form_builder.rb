@@ -20,7 +20,10 @@ module BootstrapForms
     end
 
     %w(collection_select select country_select time_zone_select email_field file_field number_field password_field phone_field range_field search_field telephone_field text_area text_field url_field datetime_select date_select time_select).each do |method_name|
-      define_method(method_name) do |name, args = {}|
+      define_method(method_name) do |name, *args|
+        # Workaround for ree and 1.8.7 since they don't allow block arguments with default values
+        args = args.extract_options!
+        
         @name = name
         @field_options = field_options(args)
         @args = args
