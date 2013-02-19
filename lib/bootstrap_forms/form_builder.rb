@@ -21,19 +21,22 @@ module BootstrapForms
 
     %w(collection_select select country_select time_zone_select email_field file_field number_field password_field phone_field range_field search_field telephone_field text_area text_field url_field datetime_select date_select time_select).each do |method_name|
       define_method(method_name) do |name, *args|
+        # Workaround for ree and 1.8.7 since they don't allow block arguments with default values
+        args = args.extract_options!
+        
         @name = name
         @field_options = field_options(args)
         @args = args
 
         control_group_div do
           label_field + input_div do
-            extras { super(name, *(@args << @field_options.merge(required_attribute))) }
+            extras { super(name, @args.merge(@field_options.merge(required_attribute))) }
           end
         end
       end
     end
 
-    def check_box(name, *args)
+    def check_box(name, args = {})
       @name = name
       @field_options = field_options(args)
       @args = args
@@ -42,10 +45,10 @@ module BootstrapForms
         input_div do
           @field_options.merge!(required_attribute)
           if @field_options[:label] == false || @field_options[:label] == ''
-            extras { super(name, *(@args << @field_options)) }
+            extras { super(name, @args.merge(@field_options)) }
           else
             label(@name, :class => 'checkbox') do
-              extras { super(name, *(@args << @field_options)) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
+              extras { super(name, @args.merge(@field_options)) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
             end
           end
         end
@@ -66,7 +69,7 @@ module BootstrapForms
       end
     end
 
-    def collection_check_boxes(attribute, records, record_id, record_name, *args)
+    def collection_check_boxes(attribute, records, record_id, record_name, args = {})
       @name = attribute
       @field_options = field_options(args)
       @args = args
@@ -88,7 +91,7 @@ module BootstrapForms
       end
     end
 
-    def collection_radio_buttons(attribute, records, record_id, record_name, *args)
+    def collection_radio_buttons(attribute, records, record_id, record_name, args = {})
       @name = attribute
       @field_options = field_options(args)
       @args = args
@@ -110,7 +113,7 @@ module BootstrapForms
       end
     end
 
-    def uneditable_input(name, *args)
+    def uneditable_input(name, args = {})
       @name = name
       @field_options = field_options(args)
       @args = args
@@ -129,30 +132,33 @@ module BootstrapForms
       end
     end
 
-    def button(name = nil, *args)
+    def button(name = nil, args = {})
+      name, args = nil, name if name.is_a?(Hash)
       @name = name
       @field_options = field_options(args)
       @args = args
 
       @field_options[:class] ||= 'btn'
-      super(name, *(args << @field_options))
+      super(name, args.merge(@field_options))
     end
 
-    def submit(name = nil, *args)
+    def submit(name = nil, args = {})
+      name, args = nil, name if name.is_a?(Hash)
       @name = name
       @field_options = field_options(args)
       @args = args
 
       @field_options[:class] ||= 'btn btn-primary'
-      super(name, *(args << @field_options))
+      super(name, args.merge(@field_options))
     end
 
-    def cancel(*args)
+    def cancel(name = nil, args = {})
+      name, args = nil, name if name.is_a?(Hash)
+      name ||= I18n.t('bootstrap_forms.buttons.cancel')
       @field_options = field_options(args)
       @field_options[:class] ||= 'btn cancel'
-      @field_options[:name] ||= I18n.t('bootstrap_forms.buttons.cancel')
       @field_options[:back] ||= :back
-      link_to(@field_options[:name], @field_options[:back], :class => @field_options[:class])
+      link_to(name, @field_options[:back], :class => @field_options[:class])
     end
 
     def actions(&block)
@@ -168,9 +174,9 @@ module BootstrapForms
     private
     def field_options(args)
       if @options
-        @options.slice(:namespace, :index).merge(args.extract_options!)
+        @options.slice(:namespace, :index).merge(args)
       else
-        args.extract_options!
+        args
       end
     end
   end
