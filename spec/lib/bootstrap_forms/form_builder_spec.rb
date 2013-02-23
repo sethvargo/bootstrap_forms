@@ -96,7 +96,7 @@ describe 'BootstrapForms::FormBuilder' do
         @builder.text_field('owner').should match /<input .*required="required"/
       end
       
-      it "does not add the required if required: false" do
+      it "does not add the required attribute if required: false" do
         @builder.text_field('owner', required: false).should_not match /<input .*required="required"/
       end
       
