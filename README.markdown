@@ -64,12 +64,25 @@ Just when you thought you were done... Bootstrap Forms includes additional form 
 = f.collection_check_boxes :category_ids, Category.all, :id, :name
 ```
 
+You can set the `inline` option to build inline checkboxes:
+
+```haml
+= f.collection_check_boxes :category_ids, Category.all, :id, :name, :inline => true
+```
+
 ### collection_radio_buttons
 See description above...
 
 ```haml
 = f.collection_radio_buttons :primary_category_id, Category.all, :id, :name
 ```
+
+You can set the `inline` option to build inline radios:
+
+```haml
+= f.collection_radio_buttons :primary_category_id, Category.all, :id, :name, :inline => true
+```
+
 
 ### radio_buttons
 
