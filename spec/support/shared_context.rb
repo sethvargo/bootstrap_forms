@@ -107,6 +107,27 @@ shared_examples 'a bootstrap form' do
 
       end # field
     end # fields
+    
+    describe 'collection select' do
+      before(:each) do
+        @result = @builder.collection_select(:name, [["foo", "Foo"]], :first, :last)
+      end
+      
+      it 'is wrapped' do
+        @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\">.*<\/div><\/div>$/
+      end
+    end
+
+    describe 'collection select with html options' do
+      before(:each) do
+        @result = @builder.collection_select(:name, [["foo", "Foo"]], :first, :last, {}, :class => "baz")
+      end
+      
+      it 'uses html options' do
+        @result.should match /class=".*baz/
+      end
+    end
+    
   end # no options
 
   describe 'extras' do
