@@ -201,6 +201,11 @@ You can add as many options to any form helper tag. If they are interpreted by B
     <td>Pass false to remove the control group and controls HTML, leaving only the label and input, wrapped in a plain div</td>
     <td><tt>= f.text_field :name, :control_group => false</tt></td>
   </tr>
+  <tr>
+    <th>:required => false</th>
+    <td>Pass false to ignore presence validation checks that add a required attribute on the generated element.</td>
+    <td><tt>= f.text_field :name, :required => false</tt></td>
+  </tr>
 </table>
 
 Internationalization/Custom Errors
