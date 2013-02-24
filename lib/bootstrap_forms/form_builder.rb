@@ -19,7 +19,7 @@ module BootstrapForms
       end
     end
 
-    %w(collection_select select country_select time_zone_select email_field file_field number_field password_field phone_field range_field search_field telephone_field text_area text_field url_field datetime_select date_select time_select).each do |method_name|
+    %w(country_select time_zone_select email_field file_field number_field password_field phone_field range_field search_field telephone_field text_area text_field url_field datetime_select date_select time_select).each do |method_name|
       define_method(method_name) do |name, *args|
         # Workaround for ree and 1.8.7 since they don't allow block arguments with default values
         args = args.extract_options!
@@ -36,6 +36,34 @@ module BootstrapForms
       end
     end
 
+    %w(collection_select select).each do |method_name|
+      define_method(method_name) do |name, *args|
+        if args[-1].is_a? Hash
+          if args[-2].is_a? Hash
+            html_options = args.pop
+            options = args.pop
+          else
+            html_options = {}
+            options = args.pop
+          end
+        else
+          html_options = {}
+          options = {}
+        end
+        
+        @name = name
+        @field_options = field_options(options)
+        @args = args
+
+        control_group_div do
+          label_field + input_div do
+            rebuilt_args = args + [options.merge(@field_options.merge(required_attribute)), html_options]
+            extras { super(name, *rebuilt_args) }
+          end
+        end
+      end
+    end
+    
     def check_box(name, args = {})
       @name = name
       @field_options = field_options(args)
