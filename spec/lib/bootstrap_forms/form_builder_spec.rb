@@ -96,6 +96,10 @@ describe 'BootstrapForms::FormBuilder' do
         @builder.text_field('owner').should match /<input .*required="required"/
       end
       
+      it "does not add the required attribute if required: false" do
+        @builder.text_field('owner', :required => false).should_not match /<input .*required="required"/
+      end
+      
       it "not require if or unless validators" do
         @builder.text_field('if_presence').should_not match /<input .*required="required"/
         @builder.text_field('unless_presence').should_not match /<input .*required="required"/
@@ -118,7 +122,6 @@ describe 'BootstrapForms::FormBuilder' do
         @project.stub!(:persisted?).and_return(true)
         @builder.text_field('create_presence').should_not match /<input .*required="required"/
       end
-      
     end
 
     context 'submit' do
