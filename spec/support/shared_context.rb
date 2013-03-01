@@ -181,10 +181,10 @@ shared_examples 'a bootstrap form' do
       end
 
       it "does not add control group" do
-        @builder.text_field(:name, :control_group => false).should == "<div><label for=\"item_name\">Name</label><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /></div>"
+        @builder.text_field(:name, :control_group => false).should == "<label for=\"item_name\">Name</label><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" />"
       end
 
-      it "does not add control group attribute to html if :control_group is true" do
+      it "adds control group attribute to html if :control_group is true" do
         @builder.text_field(:name, :control_group => true).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /></div></div>"
       end
     end
