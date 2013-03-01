@@ -19,7 +19,11 @@ module BootstrapForms
         control_group_options = {}
         control_group_options[:class] = klasses if !klasses.empty?
 
-        content_tag(:div, control_group_options, &block)
+        if @field_options[:control_group] == false
+          yield
+        else
+          content_tag(:div, control_group_options, &block)
+        end
       end
 
       def error_string

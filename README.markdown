@@ -198,7 +198,7 @@ You can add as many options to any form helper tag. If they are interpreted by B
   </tr>
   <tr>
     <th>control_group</th>
-    <td>Pass false to remove the control group and controls HTML, leaving only the label and input, wrapped in a plain div</td>
+    <td>Pass false to remove the control group and controls HTML, leaving only the label and input.</td>
     <td><tt>= f.text_field :name, :control_group => false</tt></td>
   </tr>
   <tr>
