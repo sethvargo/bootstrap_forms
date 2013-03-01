@@ -41,6 +41,10 @@ shared_examples 'a bootstrap form' do
       it 'allows no label with :label => '' ' do
         @builder.check_box('name', :label => '').should_not match /<\/label>/
       end
+      
+      it 'adds inline class' do
+        @builder.check_box('name', :inline => true).should  == "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox inline\" for=\"item_name\"><input name=\"item[name]\" type=\"hidden\" value=\"0\" /><input id=\"item_name\" name=\"item[name]\" type=\"checkbox\" value=\"1\" />Name</label></div></div>"
+      end
     end
 
     describe 'radio_buttons' do
@@ -74,6 +78,10 @@ shared_examples 'a bootstrap form' do
 
       it 'allows no label' do
         @builder.radio_buttons(:name, @options, {:label => false}).should == "<div class=\"control-group\"><div class=\"controls\"><label class=\"radio\" for=\"item_name_1\"><input id=\"item_name_1\" name=\"item[name]\" type=\"radio\" value=\"1\" />One</label><label class=\"radio\" for=\"item_name_2\"><input id=\"item_name_2\" name=\"item[name]\" type=\"radio\" value=\"2\" />Two</label></div></div>"
+      end
+
+      it 'adds inline class' do
+        @builder.radio_buttons(:name, @options, {:inline => true}).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><label class=\"radio inline\" for=\"item_name_1\"><input id=\"item_name_1\" name=\"item[name]\" type=\"radio\" value=\"1\" />One</label><label class=\"radio inline\" for=\"item_name_2\"><input id=\"item_name_2\" name=\"item[name]\" type=\"radio\" value=\"2\" />Two</label></div></div>"
       end
     end
 

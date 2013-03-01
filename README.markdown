@@ -83,11 +83,24 @@ You can set the `inline` option to build inline radios:
 = f.collection_radio_buttons :primary_category_id, Category.all, :id, :name, :inline => true
 ```
 
+### check_box
+
+Also supports `inline` option:
+
+```haml
+= f.check_box :enabled, :inline => true
+```
 
 ### radio_buttons
 
 ```haml
 = f.radio_buttons :published, { "Published" => true, "Unpublished" => false }
+```
+
+You can set the `:inline` option to build inline radios.
+
+```haml
+= f.radio_buttons :published, { "Published" => true, "Unpublished" => false }, { :inline => true }
 ```
 
 Ruby 1.8 doesn't guarantee hashes are ordered. If you care, pass in nested arrays or `ActiveSupport::OrderedHash`.
