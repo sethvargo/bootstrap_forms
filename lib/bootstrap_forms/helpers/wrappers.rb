@@ -59,7 +59,9 @@ module BootstrapForms
           klass = []
           klass << 'input-prepend' if @field_options[:prepend]
           klass << 'input-append' if @field_options[:append] || @field_options[:append_button]
-          content_tag(:div, :class => klass, &block)
+          html = content_tag(:div, :class => klass, &block)
+          html << extras(false, &block) if @field_options[:help_inline] || @field_options[:help_block] || @field_options[:error] || @field_options[:success] || @field_options[:warning]
+          html
         else
           yield if block_given?
         end
@@ -146,8 +148,15 @@ module BootstrapForms
         end
       end
 
-      def extras(&block)
-        [prepend, (yield if block_given?), append, append_button, help_inline, error, success, warning, help_block].join('').html_safe
+      def extras(input_append = nil, &block)
+        case input_append
+        when nil
+          [prepend, (yield if block_given?), append, append_button, help_inline, error, success, warning, help_block].join('').html_safe
+        when true
+          [prepend, (yield if block_given?), append, append_button].join('').html_safe
+        when false
+          [help_inline, error, success, warning, help_block].join('').html_safe
+        end
       end
 
       def objectify_options(options)
