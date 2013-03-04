@@ -152,6 +152,10 @@ shared_examples 'a bootstrap form' do
         @builder.text_field(:name, :error => 'This is an error!').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline\">This is an error!</span></div></div>"
       end
 
+      it 'adds error message, class and appended text' do
+        @builder.text_field(:name, :error => 'This is an error!', :append => 'test').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-append\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"add-on\">test</span></div><span class=\"help-inline\">This is an error!</span></div></div>"
+      end
+
       it 'adds success message and class' do
         @builder.text_field(:name, :success => 'This checked out OK').should == "<div class=\"control-group success\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline\">This checked out OK</span></div></div>"
       end
@@ -170,6 +174,14 @@ shared_examples 'a bootstrap form' do
 
       it 'prepends and appends passed text' do
         @builder.text_field(:name, :append => '@', :prepend => '#').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-prepend input-append\"><span class=\"add-on\">\#</span><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"add-on\">@</span></div></div></div>"
+      end
+
+      it 'prepends, appends and adds inline help' do
+        @builder.text_field(:name, :append => '@', :prepend => '#', :help_inline => 'some help').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-prepend input-append\"><span class=\"add-on\">\#</span><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"add-on\">@</span></div><span class=\"help-inline\">some help</span></div></div>"
+      end
+
+      it 'prepends, appends and adds block help' do
+        @builder.text_field(:name, :append => '@', :prepend => '#', :help_block => 'some help').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-prepend input-append\"><span class=\"add-on\">\#</span><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"add-on\">@</span></div><span class=\"help-block\">some help</span></div></div>"
       end
 
       it 'appends button with default values' do

@@ -30,7 +30,9 @@ module BootstrapForms
 
         control_group_div do
           label_field + input_div do
-            extras { super(name, @args.merge(@field_options.merge(required_attribute))) }
+            merged_args = @args.merge(@field_options.merge(required_attribute))
+            input_append = (merged_args[:append] || merged_args[:prepend] || merged_args[:append_button]) ? true : nil
+            extras(input_append) { super(name, merged_args) }
           end
         end
       end
