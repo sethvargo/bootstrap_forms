@@ -83,7 +83,7 @@ module BootstrapForms
 
       def required_attribute
         return {} if @field_options.present? && @field_options.has_key?(:required) && !@field_options[:required]
-        
+
         if respond_to?(:object) and object.respond_to?(:errors) and object.class.respond_to?('validators_on')
           return { :required => true } if object.class.validators_on(@name).any? { |v| v.kind_of?( ActiveModel::Validations::PresenceValidator ) && valid_validator?( v ) }
         end

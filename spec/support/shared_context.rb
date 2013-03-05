@@ -41,7 +41,7 @@ shared_examples 'a bootstrap form' do
       it 'allows no label with :label => '' ' do
         @builder.check_box('name', :label => '').should_not match /<\/label>/
       end
-      
+
       it 'adds inline class' do
         @builder.check_box('name', :inline => true).should  == "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox inline\" for=\"item_name\"><input name=\"item[name]\" type=\"hidden\" value=\"0\" /><input id=\"item_name\" name=\"item[name]\" type=\"checkbox\" value=\"1\" />Name</label></div></div>"
       end
@@ -115,12 +115,12 @@ shared_examples 'a bootstrap form' do
 
       end # field
     end # fields
-    
+
     describe 'collection select' do
       before(:each) do
         @result = @builder.collection_select(:name, [["foo", "Foo"]], :first, :last)
       end
-      
+
       it 'is wrapped' do
         @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\">.*<\/div><\/div>$/
       end
@@ -130,12 +130,12 @@ shared_examples 'a bootstrap form' do
       before(:each) do
         @result = @builder.collection_select(:name, [["foo", "Foo"]], :first, :last, {}, :class => "baz")
       end
-      
+
       it 'uses html options' do
         @result.should match /class=".*baz/
       end
     end
-    
+
   end # no options
 
   describe 'extras' do

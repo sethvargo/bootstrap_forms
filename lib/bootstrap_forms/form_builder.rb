@@ -23,7 +23,7 @@ module BootstrapForms
       define_method(method_name) do |name, *args|
         # Workaround for ree and 1.8.7 since they don't allow block arguments with default values
         args = args.extract_options!
-        
+
         @name = name
         @field_options = field_options(args)
         @args = args
@@ -52,7 +52,7 @@ module BootstrapForms
           html_options = {}
           options = {}
         end
-        
+
         @name = name
         @field_options = field_options(options)
         @args = args
@@ -65,7 +65,7 @@ module BootstrapForms
         end
       end
     end
-    
+
     def check_box(name, args = {})
       @name = name
       @field_options = field_options(args)
