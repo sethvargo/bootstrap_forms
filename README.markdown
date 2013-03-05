@@ -126,10 +126,10 @@ yields:
 
 Submit Tag
 ----------
-Bootstrap Forms also adds a default actions panel when you call `f.submit`:
+Bootstrap Forms also adds a default actions panel when you call `f.actions`:
 
 ```haml
-= f.submit
+= f.actions
 ```
 
 generates:
