@@ -10,6 +10,19 @@ describe 'bootstrap_form_for' do
       BootstrapForms.default_form_builder.should == BootstrapForms::FormBuilder
     end
 
+    context 'projects/new_without_summary_errors.html.erb', :type => :view do
+      before do
+        project = Project.new
+        project.errors.add('name')
+        assign :project, project
+        render :file => 'projects/new_without_summary_errors', :layout => 'layouts/application', :handlers => [:erb]
+      end
+
+      it 'should not render the full error messages div' do
+        rendered.should_not match /There were errors that prevented this Project from being saved/
+      end
+    end
+
     context 'when set to something else' do
       before do
         BootstrapForms.default_form_builder = MyCustomFormBuilder
