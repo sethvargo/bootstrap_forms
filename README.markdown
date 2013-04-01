@@ -149,7 +149,23 @@ Adding More Options
 -------------------
 You can add as many options to any form helper tag. If they are interpreted by Bootstrap Forms, they are interpreted and rendered in the output. If not, they are passed along as values to the final HTML form object.
 
-### Available Options
+### Form Options
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Usage</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <th>summary_errors</th>
+    <td>Show summary errors at the top</td>
+    <td><tt>= bootstrap_form_for @thing, summary_errors: false</td></td>
+    <td><tt>true</tt></td>
+  </tr>
+</table>
+
+### Field Options
 
 <table>
   <tr>
