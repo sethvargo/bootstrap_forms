@@ -20,19 +20,32 @@ module BootstrapForms
     end
 
     %w(country_select time_zone_select email_field file_field number_field password_field phone_field range_field search_field telephone_field text_area text_field url_field datetime_select date_select time_select).each do |method_name|
-      define_method(method_name) do |name, *args|
-        # Workaround for ree and 1.8.7 since they don't allow block arguments with default values
-        args = args.extract_options!
+      define_method(method_name) do |name, *raw_args|
+
+        options = {}
+        html_options = {}
+
+        if raw_args.length > 0
+          if raw_args[-1].is_a?(Hash) && raw_args[-2].is_a?(Hash)
+            html_options = raw_args[-1]
+            options = raw_args[-2]
+          elsif raw_args[-1].is_a?(Hash)
+            options = raw_args[-1]
+          end
+        end
+
+        # Add options hash to argument array if its empty
+        raw_args << options if raw_args.length == 0
 
         @name = name
-        @field_options = field_options(args)
-        @args = args
+        @field_options = field_options(options)
+        @args = options
 
         control_group_div do
           label_field + input_div do
-            merged_args = @args.merge(@field_options.merge(required_attribute))
-            input_append = (merged_args[:append] || merged_args[:prepend] || merged_args[:append_button]) ? true : nil
-            extras(input_append) { super(name, merged_args) }
+            options.merge!(@field_options.merge(required_attribute))
+            input_append = (options[:append] || options[:prepend] || options[:append_button]) ? true : nil
+            extras(input_append) { super(name, *raw_args) }
           end
         end
       end
