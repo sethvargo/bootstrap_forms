@@ -1,3 +1,6 @@
+
+require 'country_select'
+
 shared_examples 'a bootstrap form' do
   describe 'with no options' do
     describe 'error_messages' do
@@ -135,6 +138,28 @@ shared_examples 'a bootstrap form' do
         @result.should match /class=".*baz/
       end
     end
+    
+    
+    describe 'country_select' do
+      before(:each) do
+        @result = @builder.country_select(:name,[ "United Kingdom", "France", "Germany" ])
+      end
+
+      it 'is wrapped' do
+        @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select id=\"item_name\" name=\"item\[name\]\"><option value=\"United Kingdom\">United Kingdom<\/option>/
+      end
+    end
+    
+    describe 'collection_select with html options' do
+      before(:each) do
+        @result = @builder.country_select(:name, [ "United Kingdom", "France", "Germany" ], {}, :class => "baz")
+      end
+
+      it 'uses html options' do
+        @result.should match /class=".*baz/
+      end
+    end
+    
 
   end # no options
 
