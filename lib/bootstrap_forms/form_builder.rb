@@ -19,7 +19,27 @@ module BootstrapForms
       end
     end
 
-    %w(collection_select select country_select time_zone_select email_field file_field number_field password_field phone_field range_field search_field telephone_field text_area text_field url_field datetime_select date_select time_select).each do |method_name|
+    %w(
+      select
+      collection_select
+      country_select
+      datetime_select
+      date_select
+      time_select
+      time_zone_select
+
+      email_field
+      file_field
+      number_field
+      password_field
+      phone_field
+      range_field
+      search_field
+      telephone_field
+      text_area
+      text_field
+      url_field
+    ).each do |method_name|
       define_method(method_name) do |name, *raw_args|
 
         options = {}
