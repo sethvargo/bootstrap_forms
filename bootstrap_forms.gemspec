@@ -3,7 +3,7 @@ $:.push File.expand_path('../lib', __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'bootstrap_forms'
-  s.version     = '3.0.0'
+  s.version     = '3.0.1'
   s.author      = 'Seth Vargo'
   s.email       = 'sethvargo@gmail.com'
   s.homepage    = 'https://github.com/sethvargo/bootstrap_forms'
