@@ -150,7 +150,7 @@ shared_examples 'a bootstrap form' do
       end
     end
     
-    describe 'collection_select with html options' do
+    describe 'country_select with html options' do
       before(:each) do
         @result = @builder.country_select(:name, [ "United Kingdom", "France", "Germany" ], {}, :class => "baz")
       end
