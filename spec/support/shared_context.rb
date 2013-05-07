@@ -143,22 +143,22 @@ shared_examples 'a bootstrap form' do
       
       describe "with hash values, options and html options" do
         it 'is wrapped' do
-          @result = @builder.select(:name, {"True" => true, "False" => false}, { :selected => false }, {:class => "my-special-select"})
-          @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select class=\"my-special-select\" id=\"item_name\" name=\"item\[name\]\"><option value=\"true\">True<\/option>\n<option value=\"false\" selected=\"selected\">False<\/option><\/select><\/div><\/div>$/
+          @result = @builder.select(:name, {"False" => false}, { :selected => false }, {:class => "my-special-select"})
+          @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select class=\"my-special-select\" id=\"item_name\" name=\"item\[name\]\"><option value=\"false\" selected=\"selected\">False<\/option><\/select><\/div><\/div>$/
         end
       end
       
       describe "with only hash values and options" do
         it 'is wrapped' do
-          @result = @builder.select(:name, {"True" => true, "False" => false}, { :selected => false })
-          @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select id=\"item_name\" name=\"item\[name\]\"><option value=\"true\">True<\/option>\n<option value=\"false\" selected=\"selected\">False<\/option><\/select><\/div><\/div>$/
+          @result = @builder.select(:name, {"False" => false}, { :selected => false })
+          @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select id=\"item_name\" name=\"item\[name\]\"><option value=\"false\" selected=\"selected\">False<\/option><\/select><\/div><\/div>$/
         end
       end
       
       describe "with only hash values" do
         it 'is wrapped' do
-          @result = @builder.select(:name, {"True" => true, "False" => false})
-          @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select id=\"item_name\" name=\"item\[name\]\"><option value=\"true\">True<\/option>\n<option value=\"false\">False<\/option><\/select><\/div><\/div>$/
+          @result = @builder.select(:name, {"False" => false})
+          @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select id=\"item_name\" name=\"item\[name\]\"><option value=\"false\">False<\/option><\/select><\/div><\/div>$/
         end
       end
       
