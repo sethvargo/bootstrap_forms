@@ -139,6 +139,30 @@ shared_examples 'a bootstrap form' do
       end
     end
     
+    describe "select" do
+      
+      describe "with hash values, options and html options" do
+        it 'is wrapped' do
+          @result = @builder.select(:name, {"False" => false}, { :selected => false }, {:class => "my-special-select"})
+          @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select class=\"my-special-select\" id=\"item_name\" name=\"item\[name\]\"><option value=\"false\" selected=\"selected\">False<\/option><\/select><\/div><\/div>$/
+        end
+      end
+      
+      describe "with only hash values and options" do
+        it 'is wrapped' do
+          @result = @builder.select(:name, {"False" => false}, { :selected => false })
+          @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select id=\"item_name\" name=\"item\[name\]\"><option value=\"false\" selected=\"selected\">False<\/option><\/select><\/div><\/div>$/
+        end
+      end
+      
+      describe "with only hash values" do
+        it 'is wrapped' do
+          @result = @builder.select(:name, {"False" => false})
+          @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select id=\"item_name\" name=\"item\[name\]\"><option value=\"false\">False<\/option><\/select><\/div><\/div>$/
+        end
+      end
+      
+    end
     
     describe 'country_select' do
       before(:each) do
@@ -150,7 +174,7 @@ shared_examples 'a bootstrap form' do
       end
     end
     
-    describe 'collection_select with html options' do
+    describe 'country_select with html options' do
       before(:each) do
         @result = @builder.country_select(:name, [ "United Kingdom", "France", "Germany" ], {}, :class => "baz")
       end
@@ -235,7 +259,7 @@ shared_examples 'a bootstrap form' do
     end
 
     context 'label option' do
-      %w(select email_field file_field number_field password_field search_field text_area text_field url_field).each do |method_name|
+      %w(email_field file_field number_field password_field search_field text_area text_field url_field).each do |method_name|
 
         it "should not add a label when ''" do
           @builder.send(method_name.to_sym, 'name', :label => '').should_not match /<\/label>/
@@ -243,6 +267,17 @@ shared_examples 'a bootstrap form' do
 
         it 'should not add a label when false' do
           @builder.send(method_name.to_sym, 'name', :label => false).should_not match /<\/label>/
+        end
+      end
+
+      %w(select).each do |method_name|
+
+        it "should not add a label when ''" do
+          @builder.send(method_name.to_sym, 'name', [1,2], :label => '').should_not match /<\/label>/
+        end
+
+        it 'should not add a label when false' do
+          @builder.send(method_name.to_sym, 'name', [1,2], :label => false).should_not match /<\/label>/
         end
       end
     end

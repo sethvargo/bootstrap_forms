@@ -41,6 +41,13 @@ module BootstrapForms
       url_field
     ).each do |method_name|
       define_method(method_name) do |name, *raw_args|
+        
+        # Special case for select
+        if method_name == 'select'
+          while raw_args.length < 3
+            raw_args << {}
+          end
+        end
 
         options = {}
         html_options = {}
@@ -212,6 +219,7 @@ module BootstrapForms
     end
 
     private
+    
     def field_options(args)
       if @options
         @options.slice(:namespace, :index).merge(args)
