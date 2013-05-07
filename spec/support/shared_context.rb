@@ -235,7 +235,7 @@ shared_examples 'a bootstrap form' do
     end
 
     context 'label option' do
-      %w(select email_field file_field number_field password_field search_field text_area text_field url_field).each do |method_name|
+      %w(email_field file_field number_field password_field search_field text_area text_field url_field).each do |method_name|
 
         it "should not add a label when ''" do
           @builder.send(method_name.to_sym, 'name', :label => '').should_not match /<\/label>/
@@ -243,6 +243,17 @@ shared_examples 'a bootstrap form' do
 
         it 'should not add a label when false' do
           @builder.send(method_name.to_sym, 'name', :label => false).should_not match /<\/label>/
+        end
+      end
+
+      %w(select).each do |method_name|
+
+        it "should not add a label when ''" do
+          @builder.send(method_name.to_sym, 'name', [1,2], :label => '').should_not match /<\/label>/
+        end
+
+        it 'should not add a label when false' do
+          @builder.send(method_name.to_sym, 'name', [1,2], :label => false).should_not match /<\/label>/
         end
       end
     end
