@@ -196,6 +196,10 @@ shared_examples 'a bootstrap form' do
       it 'adds help block' do
         @builder.text_field(:name, :help_block => 'help me!').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-block\">help me!</span></div></div>"
       end
+      
+      it 'marks it as required' do
+        @builder.text_field(:name, :required => true).should == "<div class=\"control-group required\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" required=\"required\" size=\"30\" type=\"text\" /></div></div>"
+      end
 
       it 'adds error message and class' do
         @builder.text_field(:name, :error => 'This is an error!').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline\">This is an error!</span></div></div>"
