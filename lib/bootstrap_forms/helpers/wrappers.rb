@@ -15,7 +15,7 @@ module BootstrapForms
         klasses << 'error' if @field_options[:error]
         klasses << 'success' if @field_options[:success]
         klasses << 'warning' if @field_options[:warning]
-        klasses << 'required' if @field_options[:required]
+        klasses << 'required' if @field_options.merge(required_attribute)[:required]
 
         control_group_options = {}
         control_group_options[:class] = klasses if !klasses.empty?
