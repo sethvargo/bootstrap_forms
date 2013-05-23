@@ -92,7 +92,7 @@ describe 'BootstrapForms::FormBuilder' do
     end
     
     context "errors with translations" do
-      before(:all) { I18n.backend.store_translations I18n.locale, {errors: {format: "%{message}", messages: {invalid: "Nope"}}} }
+      before(:all) { I18n.backend.store_translations I18n.locale, {:errors => {:format => "%{message}", :messages => {:invalid => "Nope"}}} }
       after(:all)  { I18n.backend.reload! }
       
       before(:each) do
