@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'bootstrap_forms/engine' if defined?(::Rails)
+require 'bootstrap_forms/version'
 
 module BootstrapForms
   extend ActiveSupport::Autoload
