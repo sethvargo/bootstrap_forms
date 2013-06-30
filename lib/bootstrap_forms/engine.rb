@@ -3,6 +3,8 @@ module BootstrapForms
     initializer 'bootstrap_forms.initialize' do
       config.to_prepare do
         ActiveSupport.on_load(:action_view) do
+          require_relative 'helpers'
+
           include BootstrapForms::Helpers::FormHelper
           include BootstrapForms::Helpers::FormTagHelper
           include BootstrapForms::Helpers::NestedFormHelper

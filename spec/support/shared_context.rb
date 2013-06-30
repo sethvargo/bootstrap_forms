@@ -52,13 +52,7 @@ shared_examples 'a bootstrap form' do
 
     describe 'radio_buttons' do
       before do
-        if RUBY_VERSION < '1.9'
-          @options = ActiveSupport::OrderedHash.new
-          @options['One'] = '1'
-          @options['Two'] = '2'
-        else
-          @options = {'One' => '1', 'Two' => '2'}
-        end
+        @options = {'One' => '1', 'Two' => '2'}
       end
 
       it 'doesn\'t use field_options from previously generated field' do
@@ -138,32 +132,32 @@ shared_examples 'a bootstrap form' do
         @result.should match /class=".*baz/
       end
     end
-    
+
     describe "select" do
-      
+
       describe "with hash values, options and html options" do
         it 'is wrapped' do
           @result = @builder.select(:name, {"False" => false}, { :selected => false }, {:class => "my-special-select"})
           @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select class=\"my-special-select\" id=\"item_name\" name=\"item\[name\]\"><option value=\"false\" selected=\"selected\">False<\/option><\/select><\/div><\/div>$/
         end
       end
-      
+
       describe "with only hash values and options" do
         it 'is wrapped' do
           @result = @builder.select(:name, {"False" => false}, { :selected => false })
           @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select id=\"item_name\" name=\"item\[name\]\"><option value=\"false\" selected=\"selected\">False<\/option><\/select><\/div><\/div>$/
         end
       end
-      
+
       describe "with only hash values" do
         it 'is wrapped' do
           @result = @builder.select(:name, {"False" => false})
           @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select id=\"item_name\" name=\"item\[name\]\"><option value=\"false\">False<\/option><\/select><\/div><\/div>$/
         end
       end
-      
+
     end
-    
+
     describe 'country_select' do
       before(:each) do
         @result = @builder.country_select(:name,[ "United Kingdom", "France", "Germany" ])
@@ -173,7 +167,7 @@ shared_examples 'a bootstrap form' do
         @result.should match /^<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name<\/label><div class=\"controls\"><select id=\"item_name\" name=\"item\[name\]\"><option value=\"United Kingdom\">United Kingdom<\/option>/
       end
     end
-    
+
     describe 'country_select with html options' do
       before(:each) do
         @result = @builder.country_select(:name, [ "United Kingdom", "France", "Germany" ], {}, :class => "baz")
@@ -183,7 +177,7 @@ shared_examples 'a bootstrap form' do
         @result.should match /class=".*baz/
       end
     end
-    
+
 
   end # no options
 
@@ -196,7 +190,7 @@ shared_examples 'a bootstrap form' do
       it 'adds help block' do
         @builder.text_field(:name, :help_block => 'help me!').should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-block\">help me!</span></div></div>"
       end
-      
+
       it 'marks it as required' do
         @builder.text_field(:name, :required => true).should == "<div class=\"control-group required\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" required=\"required\" size=\"30\" type=\"text\" /></div></div>"
       end

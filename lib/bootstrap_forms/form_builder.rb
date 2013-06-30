@@ -1,5 +1,6 @@
 module BootstrapForms
   class FormBuilder < ::ActionView::Helpers::FormBuilder
+    require_relative 'helpers/wrappers'
     include BootstrapForms::Helpers::Wrappers
 
     delegate :content_tag, :hidden_field_tag, :check_box_tag, :radio_button_tag, :button_tag, :link_to, :to => :@template
@@ -41,7 +42,7 @@ module BootstrapForms
       url_field
     ).each do |method_name|
       define_method(method_name) do |name, *raw_args|
-        
+
         # Special case for select
         if method_name == 'select'
           while raw_args.length < 3
@@ -219,7 +220,7 @@ module BootstrapForms
     end
 
     private
-    
+
     def field_options(args)
       if @options
         @options.slice(:namespace, :index).merge(args)

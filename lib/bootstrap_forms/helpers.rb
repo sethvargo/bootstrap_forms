@@ -1,8 +1,8 @@
 module BootstrapForms
   module Helpers
-    autoload :FormHelper, 'bootstrap_forms/helpers/form_helper'
-    autoload :FormTagHelper, 'bootstrap_forms/helpers/form_tag_helper'
-    autoload :NestedFormHelper, 'bootstrap_forms/helpers/nested_form_helper'
-    autoload :Wrappers, 'bootstrap_forms/helpers/wrappers'
+    require_relative 'helpers/form_helper'
+    require_relative 'helpers/form_tag_helper'
+    require_relative 'helpers/nested_form_helper'
+    require_relative 'helpers/wrappers'
   end
 end
