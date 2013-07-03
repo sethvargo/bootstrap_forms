@@ -90,16 +90,16 @@ describe 'BootstrapForms::FormBuilder' do
         @builder.text_field('name', :error => 'This is an error!').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline error-message\">This is an error!, Name is invalid</span></div></div>"
       end
     end
-    
+
     context "errors with translations" do
       before(:all) { I18n.backend.store_translations I18n.locale, {:errors => {:format => "%{message}", :messages => {:invalid => "Nope"}}} }
       after(:all)  { I18n.backend.reload! }
-      
+
       before(:each) do
         @project.errors.add('name')
         @result = @builder.error_messages
       end
-      
+
       it 'use i18n format on field error message' do
         @builder.text_field('name').should match /<span class="help-inline error-message">Nope<\/span>/
       end
@@ -153,7 +153,8 @@ describe 'BootstrapForms::FormBuilder' do
 
   context 'setup builder with a symbol' do
     before(:each) do
-      @template = ActionView::Base.new
+      @project = Project.new
+      @template = ActionView::Base.new(nil, :item => @project)
       @template.output_buffer = ''
       @builder = BootstrapForms::FormBuilder.new(:item, nil, @template, {}, proc {})
     end

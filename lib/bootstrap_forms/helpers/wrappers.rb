@@ -1,6 +1,8 @@
 module BootstrapForms
   module Helpers
     module Wrappers
+      BOOTSTRAP_OPTIONS = [ :label, :help_inline, :error, :success, :warning, :help_block, :prepend, :append, :append_button, :control_group ]
+
       private
       def control_group_div(&block)
         field_errors = error_string
@@ -164,7 +166,7 @@ module BootstrapForms
       end
 
       def objectify_options(options)
-        super.except(:label, :help_inline, :error, :success, :warning, :help_block, :prepend, :append, :append_button, :control_group)
+        super.except(*BOOTSTRAP_OPTIONS)
       end
     end
   end
