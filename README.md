@@ -103,6 +103,12 @@ You can set the `:inline` option to build inline radios.
 = f.radio_buttons :published, { "Published" => true, "Unpublished" => false }, { :inline => true }
 ```
 
+You can set radio options by passing a hash instead of a value:
+
+```haml
+= f.radio_buttons :published, { "Published" => true, "Unpublished" => {:value => false, :disabled => true} }
+```
+
 Ruby 1.8 doesn't guarantee hashes are ordered. If you care, pass in nested arrays or `ActiveSupport::OrderedHash`.
 
 Uneditable Input

@@ -109,8 +109,14 @@ module BootstrapForms
           klasses = 'radio'
           klasses << ' inline' if @field_options.delete(:inline) == true
           values.map do |text, value|
+            radio_options = @field_options
+            if value.is_a? Hash
+              radio_options = radio_options.merge(value)
+              value = radio_options.delete(:value)
+            end
+
             label("#{@name}_#{value}", :class => klasses) do
-              extras { radio_button(name, value, @field_options) + text }
+              extras { radio_button(name, value, radio_options) + text }
             end
           end.join.html_safe
         end
