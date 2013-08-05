@@ -141,6 +141,9 @@ module BootstrapForms
             tag_options[:type] = 'button'
             tag_options[:class] = 'btn'
             tag_options.merge! button_options
+          when 'error', 'success', 'warning'
+            element = :span
+            tag_options[:class] = "help-inline #{method_name}-message"
           else
             element = :span
             tag_options[:class] = 'help-inline'

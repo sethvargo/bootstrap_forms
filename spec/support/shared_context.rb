@@ -206,19 +206,19 @@ shared_examples 'a bootstrap form' do
       end
 
       it 'adds error message and class' do
-        @builder.text_field(:name, :error => 'This is an error!').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline\">This is an error!</span></div></div>"
+        @builder.text_field(:name, :error => 'This is an error!').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline error-message\">This is an error!</span></div></div>"
       end
 
       it 'adds error message, class and appended text' do
-        @builder.text_field(:name, :error => 'This is an error!', :append => 'test').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-append\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"add-on\">test</span></div><span class=\"help-inline\">This is an error!</span></div></div>"
+        @builder.text_field(:name, :error => 'This is an error!', :append => 'test').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-append\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"add-on\">test</span></div><span class=\"help-inline error-message\">This is an error!</span></div></div>"
       end
 
       it 'adds success message and class' do
-        @builder.text_field(:name, :success => 'This checked out OK').should == "<div class=\"control-group success\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline\">This checked out OK</span></div></div>"
+        @builder.text_field(:name, :success => 'This checked out OK').should == "<div class=\"control-group success\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline success-message\">This checked out OK</span></div></div>"
       end
 
       it 'adds warning message and class' do
-        @builder.text_field(:name, :warning => 'Take a look at this...').should == "<div class=\"control-group warning\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline\">Take a look at this...</span></div></div>"
+        @builder.text_field(:name, :warning => 'Take a look at this...').should == "<div class=\"control-group warning\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline warning-message\">Take a look at this...</span></div></div>"
       end
 
       it 'prepends passed text' do
