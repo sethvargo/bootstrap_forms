@@ -108,7 +108,8 @@ module BootstrapForms
         label_field + input_div do
           klasses = 'radio'
           klasses << ' inline' if @field_options.delete(:inline) == true
-          values.map do |text, value|
+
+          buttons = values.map do |text, value|
             radio_options = @field_options
             if value.is_a? Hash
               radio_options = radio_options.merge(value)
@@ -116,9 +117,11 @@ module BootstrapForms
             end
 
             label("#{@name}_#{value}", :class => klasses) do
-              extras { radio_button(name, value, radio_options) + text }
+              radio_button(name, value, radio_options) + text
             end
-          end.join.html_safe
+          end.join('')
+          buttons << extras
+          buttons.html_safe
         end
       end
     end
@@ -129,18 +132,20 @@ module BootstrapForms
       @args = args
 
       control_group_div do
-        label_field + extras do
-          content_tag(:div, :class => 'controls') do
-            options = @field_options.merge(required_attribute)
-            records.collect do |record|
-              options[:id] = "#{object_name}_#{attribute}_#{record.send(record_id)}"
-              checkbox = check_box_tag("#{object_name}[#{attribute}][]", record.send(record_id), [object.send(attribute)].flatten.include?(record.send(record_id)), options)
+        label_field + input_div do
+          options = @field_options.except(*BOOTSTRAP_OPTIONS).merge(required_attribute)
+          # Since we're using check_box_tag() we may have to lookup the instance ourselves
+          instance = object || @template.instance_variable_get("@#{object_name}")
+          boxes = records.collect do |record|
+            options[:id] = "#{object_name}_#{attribute}_#{record.send(record_id)}"
+            checkbox = check_box_tag("#{object_name}[#{attribute}][]", record.send(record_id), [instance.send(attribute)].flatten.include?(record.send(record_id)), options)
 
-              content_tag(:label, :class => ['checkbox', ('inline' if @field_options[:inline])].compact) do
-                checkbox + content_tag(:span, record.send(record_name))
-              end
-            end.join('').html_safe
-          end
+            content_tag(:label, :class => ['checkbox', ('inline' if @field_options[:inline])].compact) do
+              checkbox + record.send(record_name)
+            end
+          end.join('')
+          boxes << extras
+          boxes.html_safe
         end
       end
     end
@@ -151,18 +156,16 @@ module BootstrapForms
       @args = args
 
       control_group_div do
-        label_field + extras do
-          content_tag(:div, :class => 'controls') do
-            options = @field_options.merge(required_attribute)
-            records.collect do |record|
-              options[:id] = "#{object_name}_#{attribute}_#{record.send(record_id)}"
-              radiobutton = radio_button_tag("#{object_name}[#{attribute}]", record.send(record_id), object.send(attribute) == record.send(record_id), options)
-
-              content_tag(:label, :class => ['radio', ('inline' if @field_options[:inline])].compact) do
-                radiobutton + content_tag(:span, record.send(record_name))
-              end
-            end.join('').html_safe
-          end
+        label_field + input_div do
+          options = @field_options.merge(required_attribute)
+          buttons = records.collect do |record|
+            radiobutton = radio_button(attribute, record.send(record_id), options)
+            content_tag(:label, :class => ['radio', ('inline' if @field_options[:inline])].compact) do
+              radiobutton + record.send(record_name)
+            end
+          end.join('')
+          buttons << extras
+          buttons.html_safe
         end
       end
     end
@@ -226,7 +229,6 @@ module BootstrapForms
     end
 
     private
-
     def field_options(args)
       if @options
         @options.slice(:namespace, :index).merge(args)
