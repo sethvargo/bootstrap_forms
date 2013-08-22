@@ -1,5 +1,8 @@
 CHANGELOG
 =========
+v4.0.1
+------
+- Fix critical UI bug when displaying radio/checkbox collections (@sshaw)
 
 v4.0.0
 ------
