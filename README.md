@@ -223,6 +223,7 @@ You can add as many options to any form helper tag. If they are interpreted by B
       :class has a default value of 'btn'<br/>
       :type has a default value of 'button'<br/>
       Any other entries are passed directly to Rails's tag helper.
+      Pass an array of hashes to append multiple buttons.
     </td>
     <td><tt>= f.text_field :name, :append_button => { :label => 'Button label', :icon => 'icon-plus', :type => 'button' }</td></td>
   </tr>
