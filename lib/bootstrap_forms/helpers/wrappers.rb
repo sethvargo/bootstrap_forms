@@ -118,39 +118,35 @@ module BootstrapForms
         define_method(method_name) do |*args|
           return '' unless value = @field_options[method_name.to_sym]
 
-          escape = true
-          tag_options = {}
           case method_name
           when 'help_block'
-            element = :span
-            tag_options[:class] = 'help-block'
+            content_tag(:span, value, :class => 'help-block')
           when 'append', 'prepend'
-            element = :span
-            tag_options[:class] = 'add-on'
+            content_tag(:span, value, :class => 'add-on')
           when 'append_button'
-            element = :button
-            button_options = value
-            value = ''
-
-            if button_options.has_key? :icon
-              value << content_tag(:i, '', { :class => button_options.delete(:icon) })
-              value << ' '
-              escape = false
+            if value.is_a? Array
+              buttons_options = value
+            else
+              buttons_options = [value]
             end
 
-            value << button_options.delete(:label)
+            buttons_options.map  do |button_options|
+              button_options = button_options.dup
+              value = ''
+              if button_options.has_key? :icon
+                value << content_tag(:i, '', { :class => button_options.delete(:icon) })
+                value << ' '
+              end
 
-            tag_options[:type] = 'button'
-            tag_options[:class] = 'btn'
-            tag_options.merge! button_options
+              value << ERB::Util.h(button_options.delete(:label))
+              options = {:type => 'button', :class => 'btn'}.merge(button_options)
+              content_tag(:button, value, options, false)
+            end.join
           when 'error', 'success', 'warning'
-            element = :span
-            tag_options[:class] = "help-inline #{method_name}-message"
+            content_tag(:span, value, :class => "help-inline #{method_name}-message")
           else
-            element = :span
-            tag_options[:class] = 'help-inline'
+            content_tag(:span, value, :class => 'help-inline')
           end
-          content_tag(element, value, tag_options, escape)
         end
       end
 
