@@ -289,6 +289,13 @@ shared_examples 'a bootstrap form' do
         @builder.text_field(:name, :append_button => { :label => 'button label', :icon => 'icon-plus icon-white' }).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><div class=\"input-append\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><button class=\"btn\" type=\"button\"><i class=\"icon-plus icon-white\"></i> button label</button></div></div></div>"
       end
 
+      it 'appends button twice with same options' do
+        options = { :label => 'button label', :icon => 'icon-plus icon-white' }
+        first = @builder.text_field(:name, :append_button => options)
+        second = @builder.text_field(:name, :append_button => options)
+        second.should == first
+      end
+
       it "does not add control group" do
         @builder.text_field(:name, :control_group => false).should == "<label for=\"item_name\">Name</label><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" />"
       end
