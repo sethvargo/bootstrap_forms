@@ -129,7 +129,7 @@ module BootstrapForms
             tag_options[:class] = 'add-on'
           when 'append_button'
             element = :button
-            button_options = value
+            button_options = value.dup
             value = ''
 
             if button_options.has_key? :icon
