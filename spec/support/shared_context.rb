@@ -48,6 +48,10 @@ shared_examples 'a bootstrap form' do
       it 'adds inline class' do
         @builder.check_box('name', :inline => true).should  == "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox inline\" for=\"item_name\"><input name=\"item[name]\" type=\"hidden\" value=\"0\" /><input id=\"item_name\" name=\"item[name]\" type=\"checkbox\" value=\"1\" />Name</label></div></div>"
       end
+
+      it 'uses passed values' do
+        @builder.check_box('name', {}, "checked value", "unchecked value").should  == "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\" for=\"item_name\"><input name=\"item[name]\" type=\"hidden\" value=\"unchecked value\" /><input id=\"item_name\" name=\"item[name]\" type=\"checkbox\" value=\"checked value\" />Name</label></div></div>"
+      end
     end
 
     describe 'radio_buttons' do
