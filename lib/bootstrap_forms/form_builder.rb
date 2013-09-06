@@ -79,7 +79,7 @@ module BootstrapForms
       end
     end
 
-    def check_box(name, args = {})
+    def check_box(name, args = {}, checked_value = "1", unchecked_value = "0")
       @name = name
       @field_options = field_options(args)
       @args = args
@@ -94,7 +94,7 @@ module BootstrapForms
             klasses << ' inline' if @field_options.delete(:inline) == true
             @args.delete :inline
             label(@name, :class => klasses) do
-              extras { super(name, @args.merge(@field_options)) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
+              extras { super(name, @args.merge(@field_options), checked_value, unchecked_value) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
             end
           end
         end
