@@ -44,7 +44,7 @@ module BootstrapForms
       define_method(method_name) do |name, *raw_args|
 
         # Special case for select
-        if method_name == 'select'
+        if method_name == 'select' or method_name == 'country_select'
           while raw_args.length < 3
             raw_args << {}
           end
