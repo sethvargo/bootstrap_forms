@@ -224,6 +224,15 @@ shared_examples 'a bootstrap form' do
       end
     end
 
+    describe 'country_select without option' do
+      before(:each) do
+        @result = @builder.country_select(:name)
+      end
+
+      it 'does not output error option' do
+        @result.should_not match /error/
+      end
+    end
 
   end # no options
 
