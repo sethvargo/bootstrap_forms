@@ -41,7 +41,7 @@ module BootstrapForms
       end
 
       def human_attribute_name
-        object.class.human_attribute_name(@name) rescue @name.titleize
+        object.class.human_attribute_name(@name) rescue @name.to_s.titleize
       end
 
       def input_div(&block)
