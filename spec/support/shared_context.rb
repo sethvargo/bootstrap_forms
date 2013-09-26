@@ -52,6 +52,18 @@ shared_examples 'a bootstrap form' do
       it 'uses passed values' do
         @builder.check_box('name', {}, "checked value", "unchecked value").should  == "<div class=\"control-group\"><div class=\"controls\"><label class=\"checkbox\" for=\"item_name\"><input name=\"item[name]\" type=\"hidden\" value=\"unchecked value\" /><input id=\"item_name\" name=\"item[name]\" type=\"checkbox\" value=\"checked value\" />Name</label></div></div>"
       end
+
+      it 'allows symbol as field name' do
+        @builder.check_box(:name).should == @builder.check_box('name')
+      end
+
+      context "with helper translations" do
+        before(:all) { I18n.backend.store_translations I18n.locale, {:helpers => {:label => {"item" => {"name" => "name translation"}}}} }
+        after(:all)  { I18n.backend.reload! }
+        it 'uses helper translation' do
+          @builder.check_box(:name).should include("name translation")
+        end
+      end
     end
 
     describe 'radio_buttons' do
