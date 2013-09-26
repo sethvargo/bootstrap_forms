@@ -41,7 +41,26 @@ module BootstrapForms
       end
 
       def human_attribute_name
-        object.class.human_attribute_name(@name) rescue @name.to_s.titleize
+        object_name = @object_name.to_s.dup
+        
+        # Copied from https://github.com/rails/rails/blob/fb24f419051aec00790a8e6fb5785eeb6f503f4a/actionpack/lib/action_view/helpers/tags/label.rb#L38
+        object_name.gsub!(/\[(.*)_attributes\]\[\d\]/, '.\1')
+        method = @name.to_s
+        if object.respond_to?(:to_model)
+          key = object.class.model_name.i18n_key
+          i18n_default = ["#{key}.#{method}".to_sym, ""]
+        end
+
+        i18n_default ||= ""
+        result = I18n.t("#{object_name}.#{method}", :default => i18n_default, :scope => "helpers.label").presence
+        
+        result ||= if object && object.class.respond_to?(:human_attribute_name)
+          object.class.human_attribute_name(method)
+        end
+        
+        result ||= method.humanize
+        
+        result
       end
 
       def input_div(&block)
