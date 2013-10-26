@@ -17,10 +17,10 @@ module BootstrapForms
         end
       end
 
-      def bootstrap_fields_for(record, options = {}, &block)
+      def bootstrap_fields_for(record_name, record_object = nil, options = {}, &block)
         options[:builder] ||= BootstrapForms.default_form_builder
 
-        fields_for(record, nil, options, &block)
+        fields_for(record_name, record_object, options, &block)
       end
     end
   end
