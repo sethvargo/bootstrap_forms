@@ -1,0 +1,6 @@
+en:
+  bootstrap_forms:
+    errors:
+      header: "Hubo errores que impidieron que este %{model} que se guarden:"
+    buttons:
+      cancel: 'Cancelar'
