@@ -1,0 +1,6 @@
+ru:
+  bootstrap_forms:
+    errors:
+      header: "Не удалось сохранить %{model} из-за следующих ошибок:"
+    buttons:
+      cancel: Закрыть
