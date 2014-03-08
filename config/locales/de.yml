@@ -1,0 +1,6 @@
+de:
+  bootstrap_forms:
+    errors:
+      header: "%{model} konnte aufgrund folgender Fehler nicht gespeichert werden:"
+    buttons:
+      cancel: 'Abbrechen'
