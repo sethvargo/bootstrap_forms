@@ -162,9 +162,9 @@ module BootstrapForms
               content_tag(:button, value, options, false)
             end.join
           when 'error', 'success', 'warning'
-            content_tag(:span, value, :class => "help-inline #{method_name}-message")
+            ' ' + content_tag(:span, value, :class => "help-inline #{method_name}-message")
           else
-            content_tag(:span, value, :class => 'help-inline')
+            ' ' + content_tag(:span, value, :class => 'help-inline')
           end
         end
       end
