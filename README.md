@@ -1,3 +1,7 @@
+This Project Has Moved!
+=======================
+The `bootstrap_forms` project has merged with `rails-bootstrap-forms` and has a [new home](https://github.com/bootstrap-ruby/rails-bootstrap-forms). Please use the `rails-bootstrap-forms` gem moving forward. This project is only around for legacy purposes.
+
 Bootstrap Forms
 ===============
 [![Build Status](https://secure.travis-ci.org/sethvargo/bootstrap_forms.png?branch=master)](http://travis-ci.org/sethvargo/bootstrap_forms)
