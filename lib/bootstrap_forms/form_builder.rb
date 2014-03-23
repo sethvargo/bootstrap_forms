@@ -91,7 +91,7 @@ module BootstrapForms
             extras { super(name, @args.merge(@field_options)) }
           else
             klasses = 'checkbox'
-            klasses << ' inline' if @field_options.delete(:inline) == true
+            klasses << '-inline' if @field_options.delete(:inline) == true
             @args.delete :inline
             label(@name, :class => klasses) do
               extras { super(name, @args.merge(@field_options), checked_value, unchecked_value) + (@field_options[:label].blank? ? human_attribute_name : @field_options[:label])}
@@ -107,7 +107,7 @@ module BootstrapForms
       control_group_div do
         label_field + input_div do
           klasses = 'radio'
-          klasses << ' inline' if @field_options.delete(:inline) == true
+          klasses << '-inline' if @field_options.delete(:inline) == true
 
           buttons = values.map do |text, value|
             radio_options = @field_options
