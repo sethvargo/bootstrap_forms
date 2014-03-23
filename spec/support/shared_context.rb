@@ -81,6 +81,10 @@ shared_examples 'a bootstrap form' do
         @builder.instance_variable_get('@field_options').should == {:error => nil}
       end
 
+      it 'sanitizes values in id and label for' do
+        @builder.radio_buttons(:name, {'One' => '1.0', 'Two' => '2$&-!3'}).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><label class=\"radio\" for=\"item_name_10\"><input id=\"item_name_10\" name=\"item[name]\" type=\"radio\" value=\"1.0\" />One</label><label class=\"radio\" for=\"item_name_2-3\"><input id=\"item_name_2-3\" name=\"item[name]\" type=\"radio\" value=\"2$&amp;-!3\" />Two</label></div></div>"
+      end
+
       it 'generates wrapped input' do
         @builder.radio_buttons(:name, @options).should == "<div class=\"control-group\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><label class=\"radio\" for=\"item_name_1\"><input id=\"item_name_1\" name=\"item[name]\" type=\"radio\" value=\"1\" />One</label><label class=\"radio\" for=\"item_name_2\"><input id=\"item_name_2\" name=\"item[name]\" type=\"radio\" value=\"2\" />Two</label></div></div>"
       end
