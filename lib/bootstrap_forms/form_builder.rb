@@ -101,6 +101,10 @@ module BootstrapForms
       end
     end
 
+    def sanitized_value(value)
+      value.to_s.gsub(/\s/, "_").gsub(/[^-\w]/, "").downcase
+    end
+
     def radio_buttons(name, values = {}, opts = {})
       @name = name
       @field_options = @options.slice(:namespace, :index).merge(opts.merge(required_attribute))
@@ -116,7 +120,7 @@ module BootstrapForms
               value = radio_options.delete(:value)
             end
 
-            label("#{@name}_#{value}", :class => klasses) do
+            label("#{@name}_#{sanitized_value value}", :class => klasses) do
               radio_button(name, value, radio_options) + text
             end
           end.join('')
