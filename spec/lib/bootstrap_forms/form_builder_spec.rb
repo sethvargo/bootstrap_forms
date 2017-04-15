@@ -83,11 +83,11 @@ describe 'BootstrapForms::FormBuilder' do
       end
 
       it 'have error message on field' do
-        @builder.text_field('name').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline error-message\">Name is invalid</span></div></div>"
+        @builder.text_field('name').should == "<div class=\"form-group error\"><label class=\"form-label\" for=\"item_name\">Name</label><div class=\"form-controls\"><input class=\"form-control\" id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline error-message\">Name is invalid</span></div></div>"
       end
 
       it "joins passed error message and validation errors with ', '" do
-        @builder.text_field('name', :error => 'This is an error!').should == "<div class=\"control-group error\"><label class=\"control-label\" for=\"item_name\">Name</label><div class=\"controls\"><input id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline error-message\">This is an error!, Name is invalid</span></div></div>"
+        @builder.text_field('name', :error => 'This is an error!').should == "<div class=\"form-group error\"><label class=\"form-label\" for=\"item_name\">Name</label><div class=\"form-controls\"><input class=\"form-control\" id=\"item_name\" name=\"item[name]\" size=\"30\" type=\"text\" /><span class=\"help-inline error-message\">This is an error!, Name is invalid</span></div></div>"
       end
     end
 
@@ -174,7 +174,7 @@ describe 'BootstrapForms::Helpers::FormTagHelper' do
       end
 
       it 'returns an empty string with no errors' do
-        @template.bootstrap_text_field_tag(@builder.object[:name]).should match /<div class="control-group">.*/
+        @template.bootstrap_text_field_tag(@builder.object[:name]).should match /<div class="form-group">.*/
       end
     end
   end

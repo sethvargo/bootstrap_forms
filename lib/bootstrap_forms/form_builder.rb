@@ -69,6 +69,22 @@ module BootstrapForms
         @field_options = field_options(options)
         @args = options
 
+        if %w(email_field
+              file_field
+              number_field
+              password_field
+              phone_field
+              range_field
+              search_field
+              telephone_field
+              text_area
+              text_field
+              url_field).include?(method_name)
+
+          @field_options[:class] ||= 'form-control'
+
+        end
+
         control_group_div do
           label_field + input_div do
             options.merge!(@field_options.merge(required_attribute))

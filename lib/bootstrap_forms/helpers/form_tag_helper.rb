@@ -30,6 +30,8 @@ module BootstrapForms
           @field_options = field_options(args)
           @args = args
 
+          @field_options[:class] ||= 'form-control'
+
           control_group_div do
             label_field + input_div do
               extras { send(method_name.to_sym, name, *(@args << @field_options)) }

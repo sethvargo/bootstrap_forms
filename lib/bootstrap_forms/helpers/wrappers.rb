@@ -13,7 +13,7 @@ module BootstrapForms
         end
 
         klasses = []
-        klasses << 'control-group' unless @field_options[:control_group] == false
+        klasses << 'form-group' unless @field_options[:control_group] == false
         klasses << 'error' if @field_options[:error]
         klasses << 'success' if @field_options[:success]
         klasses << 'warning' if @field_options[:warning]
@@ -70,7 +70,7 @@ module BootstrapForms
           @field_options.delete :control_group
           write_input_div(&block)
         else
-          content_tag(:div, :class => 'controls') do
+          content_tag(:div, :class => 'form-controls') do
             write_input_div(&block)
           end
         end
@@ -94,7 +94,7 @@ module BootstrapForms
           return ''.html_safe
         else
           label_options = {}
-          label_options[:class] = 'control-label' unless @field_options[:control_group] == false
+          label_options[:class] = 'form-label' unless @field_options[:control_group] == false
           if respond_to?(:object)
              label(@name, block_given? ? block : @field_options[:label], label_options)
            else
